@@ -16,31 +16,41 @@
 `permit icmp any any`는 임시 항목이며 검증 후 제거.
 
 Private-net show ip access-lists pi-whitelist
+
 ![Private-net show ip access-lists pi-whitelist](images/pi-acl-list.webp)
 
 Private-net show ip interface | include access list
+
 ![Private-net show ip interface | include access list](images/pi-acl-interface.png)
 
 Private-net show ip ospf neighbor
+
 ![Private-net show ip ospf neighbor](images/pi-acl-ospf-neighbor.webp)
 
 Private-net deny 로그
+
 ![Private-net deny 로그](images/pi-deny-log.webp)
 
 DC-R1 telnet 차단
+
 ![DC-R1 telnet 차단](images/pi-deny-dc-r1.png)
 
 DC-R2 telnet 차단
+
 ![DC-R2 telnet 차단](images/pi-deny-dc-r2.png)
 
 HQ-R2 telnet 차단
+
 ![HQ-R2 telnet 차단](images/pi-deny-hq-r2.png)
 
 BR1-R1 telnet 차단
+
 ![BR1-R1 telnet 차단](images/pi-deny-br1-r1.png)
 
 BR2-R2 telnet 차단
+
 ![BR2-R2 telnet 차단](images/pi-deny-br2-r2.png)
 
 DC-R2 show dmvpn (ACL 적용 후)
+
 ![DC-R2 show dmvpn (ACL 적용 후)](images/pi-acl-dc-r2-dmvpn.webp)

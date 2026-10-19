@@ -17,19 +17,25 @@
 비고: `DC-SW1-L3`, `DC-SW2-L3`는 VLAN 100에 속한 포트가 없어 MGMT SVI를 두지 않고 콘솔로 관리하기로 결정(vlan-design.md 1절).
 
 DC-SW1-L3 INTERFACE
+
 ![DC-SW1-L3 INTERFACE](images/Pasted%20image%2020261011233344.png)
 
 DC-SW2-L3 INTERFACE
+
 ![DC-SW2-L3 INTERFACE](images/Pasted%20image%2020261011233408.png)
 
 DC-SW3-L3 INTERFACE
+
 ![DC-SW3-L3 INTERFACE](images/Pasted%20image%2020261011233436.png)
 
 DC-SW4-L3 INTERFACE
+
 ![DC-SW4-L3 INTERFACE](images/Pasted%20image%2020261011233455.png)
 
 DC-SW1-L3 Vlan100 삭제 후 확인
+
 ![DC-SW1-L3 Vlan100 삭제 후 확인](images/dc-sw1-l3-vlan100-removed.png)
 
 DC-SW2-L3 Vlan100 삭제 후 확인
+
 ![DC-SW2-L3 Vlan100 삭제 후 확인](images/dc-sw2-l3-vlan100-removed.png)

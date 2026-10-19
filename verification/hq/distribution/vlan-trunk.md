@@ -13,15 +13,19 @@
 | HQ-SW-3 | `show vlan brief` | VLAN 10 hq-public, 20 hq-private, 100 mgmt, 999 native active | 4개 VLAN 모두 active, 이름 일치 | 통과 |
 
 HQ-SW-2 TRUNK
+
 ![HQ-SW-2 TRUNK](images/Pasted%20image%2020261011235542.png)
 
 HQ-SW-3 TRUNK
+
 ![HQ-SW-3 TRUNK](images/Pasted%20image%2020261011235614.png)
 
 HQ-SW-2 VLAN
+
 ![HQ-SW-2 VLAN](images/Pasted%20image%2020261011235550.png)
 
 HQ-SW-3 VLAN
+
 ![HQ-SW-3 VLAN](images/Pasted%20image%2020261011235602.png)
 
 ## Wireshark 확인(802.1Q 태그)

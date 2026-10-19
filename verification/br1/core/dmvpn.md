@@ -18,34 +18,45 @@
 Phase 3 shortcut 검증은 2026-10-18에 BR1-R1에서 BR2-R2 대상으로 수행.
 
 BR1-R1 show ip ospf interface tunnel 0
+
 ![BR1-R1 OSPF interface tunnel 0](images/dmvpn-br1-r1-ospf-interface.webp)
 
 BR1-R1 dmvpn
+
 ![BR1-R1 dmvpn](images/dmvpn-br1-r1-dmvpn.webp)
 
 BR1-R1 nhrp
+
 ![BR1-R1 nhrp](images/dmvpn-br1-r1-nhrp.png)
 
 BR1-R1 isakmp
+
 ![BR1-R1 isakmp](images/dmvpn-br1-r1-isakmp.webp)
 
 BR1-R1 ipsec
+
 ![BR1-R1 ipsec](images/dmvpn-br1-r1-ipsec.webp)
 
 BR1-R1 ospf-neighbor
+
 ![BR1-R1 ospf-neighbor](images/dmvpn-br1-r1-ospf-neighbor.webp)
 
 BR1-R1 ping 13.13.13.2
+
 ![BR1-R1 ping 13.13.13.2](images/dmvpn-br1-r1-shortcut-ping.webp)
 
 BR1-R1 traceroute 13.13.13.2
+
 ![BR1-R1 traceroute 13.13.13.2](images/dmvpn-br1-r1-shortcut-traceroute.png)
 
 BR1-R1 show dmvpn(shortcut 후)
+
 ![BR1-R1 show dmvpn(shortcut 후)](images/dmvpn-br1-r1-shortcut-dmvpn.webp)
 
 BR1-R1 show ip nhrp(shortcut 후)
+
 ![BR1-R1 show ip nhrp(shortcut 후)](images/dmvpn-br1-r1-shortcut-nhrp.png)
 
 BR1-R1 show crypto isakmp sa(shortcut 후)
+
 ![BR1-R1 show crypto isakmp sa(shortcut 후)](images/dmvpn-br1-r1-shortcut-isakmp.webp)

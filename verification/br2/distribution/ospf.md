@@ -13,7 +13,9 @@
 
 프로세스 13, Area 3.
 BR2-SW1-L3 OSPF
+
 ![BR2-SW1-L3 OSPF](images/Pasted%20image%2020261012205237.png)
 
 BR2-SW2-L3 OSPF
+
 ![BR2-SW2-L3 OSPF](images/Pasted%20image%2020261012205249.png)

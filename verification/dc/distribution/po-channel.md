@@ -11,7 +11,9 @@
 | DC-SW4-L3 | `show port-channel dense` | Po1(Et5, Et6) LACP, 멤버 활성 | Po1(U) LACP(a) Et5(PG+) Et6(PG+), 사용 채널 1개 | 통과 |
 
 DC-SW3-L3 Po1
+
 ![DC-SW3-L3 Po1](images/Pasted%20image%2020261011233546.png)
 
 DC-SW4-L3 Po1
+
 ![DC-SW4-L3 Po1](images/Pasted%20image%2020261011233604.png)

@@ -10,12 +10,15 @@
 빨간 선은 VRRP 광고가 지나는 스위치 간 링크이며 각 사이트에서 SVI를 shutdown.
 
 HQ(Cisco): HQ-SW-2 ↔ HQ-SW-3 Gi0/2, Vl10 shutdown
+
 ![HQ VRRP 장애 지점](images/fail-vrrp-hq.png)
 
 DC(Arista): DC-SW3-L3 ↔ DC-SW4-L3 Eth6, Vl50 shutdown
+
 ![DC VRRP 장애 지점](images/fail-vrrp-dc.png)
 
 BR1(Aruba): BR1-SW1-L3 ↔ BR1-SW2-L3 1/1/4, vlan10 shutdown
+
 ![BR1 VRRP 장애 지점](images/fail-vrrp-br1.png)
 
 | 순서 | 동작 | 기대 결과 | 측정값 | 판정 |
@@ -39,21 +42,27 @@ BR1(Aruba): BR1-SW1-L3 ↔ BR1-SW2-L3 1/1/4, vlan10 shutdown
 - `ping` 손실 1개(약 1초, 최대 응답 80.308 ms). Wireshark 캡처는 전환 후 HQ-SW-3의 광고(약 1초 간격)만 보여 광고 중단 시점의 정밀 측정은 없음.
 
 HQ-SW-3 시험 전 `show vrrp brief`
+
 ![HQ-SW-3 시험 전](images/vrrp-hq-sw3-before.webp)
 
 HQ-SW-2 시험 전 `show vrrp brief`
+
 ![HQ-SW-2 시험 전](images/vrrp-hq-sw2-before.webp)
 
 HQ-SW-2 Vl10 `shutdown` 후
+
 ![HQ-SW-2 Vl10 shutdown](images/vrrp-hq-sw2-vl10-shutdown.webp)
 
 Wireshark(`vrrp`): HQ-SW-3(`10.1.10.3`)의 Master 광고
+
 ![Wireshark VRRP 광고](images/vrrp-hq-wireshark-sw3-announce.webp)
 
 `ping` 통계
+
 ![ping 통계](images/vrrp-hq-ping-stats.png)
 
 `no shutdown` 후 `preempt`로 Master 복귀
+
 ![HQ-SW-2 preempt](images/vrrp-hq-sw2-preempt.webp)
 
 ## DC 결과(Arista vEOS-lab, VLAN 50 / VIP 10.2.50.1)
@@ -65,33 +74,43 @@ Wireshark(`vrrp`): HQ-SW-3(`10.1.10.3`)의 Master 광고
 - 한계: 아래 Wireshark 캡처 일부(SW-4 광고 구간)는 전환 시점이 다른 구간이라 시각 대응은 하지 않음.
 
 DC-SW3-L3 시험 전 show vrrp brief
+
 ![DC-SW3-L3 시험 전](images/vrrp-dc-sw3-before.webp)
 
 DC-SW4-L3 시험 전 show vrrp brief
+
 ![DC-SW4-L3 시험 전](images/vrrp-dc-sw4-before.webp)
 
 Wireshark(rrp): 시험 전 SW-3(10.2.50.2) 광고
+
 ![Wireshark SW-3 광고](images/vrrp-dc-wireshark-sw3-announce.webp)
 
 DC-SW3-L3 Vl50 shutdown 후
+
 ![DC-SW3-L3 shutdown](images/vrrp-dc-sw3-vl50-shutdown.webp)
 
 DC-SW4-L3 Master 전환
+
 ![DC-SW4-L3 Master](images/vrrp-dc-sw4-master.webp)
 
 Wireshark: SW-4(10.2.50.3) Master 광고
+
 ![Wireshark SW-4 광고](images/vrrp-dc-wireshark-sw4-announce.webp)
 
 Wireshark: SW-3 마지막 광고에서 SW-4 첫 광고로 전환(약 3.16초)
+
 ![Wireshark 전환 구간](images/vrrp-dc-wireshark-transition.webp)
 
 ping 통계
+
 ![ping 통계](images/vrrp-dc-ping-stats.webp)
 
 `no shutdown` 후 DC-SW3-L3 Master 복귀
+
 ![DC-SW3-L3 preempt](images/vrrp-dc-sw3-preempt.webp)
 
 복구 후 DC-SW4-L3 Backup 복귀
+
 ![DC-SW4-L3 Backup](images/vrrp-dc-sw4-backup-restored.webp)
 
 ## BR1 결과(Aruba AOS-CX Virtual, VLAN 10 / VIP 10.3.10.1)
@@ -104,27 +123,35 @@ ping 통계
 - 시험 경위: 첫 시도에서는 BR1 L2 루프(VRRP 광고 폭주)로 전환이 지연되어 측정값으로 쓰지 않고, 루프 해소 후 재시험한 결과임. 루프 원인과 조치는 KAN-31 트러블슈팅 기록에 정리 예정.
 
 BR1-SW1-L3 시험 전 `show vrrp brief`
+
 ![BR1-SW1-L3 시험 전](images/vrrp-br1-sw1-before.png)
 
 BR1-SW2-L3 시험 전 `show vrrp brief`
+
 ![BR1-SW2-L3 시험 전](images/vrrp-br1-sw2-before.png)
 
 BR1-SW2-L3 vlan10 Master 전환
+
 ![BR1-SW2-L3 Master 전환](images/vrrp-br1-sw2-master.png)
 
 Wireshark(`vrrp`): 시험 전 SW-1 광고
+
 ![Wireshark 시험 전](images/vrrp-br1-wireshark-before.webp)
 
 Wireshark: SW-1 마지막 광고에서 SW-2 첫 광고로 전환(약 3.97초)
+
 ![Wireshark 전환 구간](images/vrrp-br1-wireshark-transition.webp)
 
 `ping` 통계
+
 ![ping 통계](images/vrrp-br1-ping-stats.png)
 
 복구 후 BR1-SW1-L3
+
 ![BR1-SW1-L3 복구](images/vrrp-br1-sw1-restored.png)
 
 복구 후 BR1-SW2-L3
+
 ![BR1-SW2-L3 복구](images/vrrp-br1-sw2-restored.webp)
 
 ## HQ 재시험(2026-10-19, 장비 로그 기준)
@@ -141,12 +168,15 @@ Wireshark: SW-1 마지막 광고에서 SW-2 첫 광고로 전환(약 3.97초)
 - 시험 전 광고 프레임 109: `10.1.10.2`, Priority 110.
 
 HQ-SW-2 로그
+
 ![HQ-SW-2 Master에서 Init](images/vrrp-hq-retest-sw2-log.png)
 
 HQ-SW-3 로그
+
 ![HQ-SW-3 Backup에서 Master](images/vrrp-hq-retest-sw3-log.png)
 
 Wireshark 프레임 564(HQ-SW-3 광고)
+
 ![프레임 564](images/vrrp-hq-retest-sw3-ad.png)
 
 ### HQ 재시험 복구 구간(`no shutdown`, 장비 로그 기준)
@@ -162,10 +192,13 @@ Wireshark 프레임 564(HQ-SW-3 광고)
 - 복구 구간 HQ-PC1 `ping 10.1.10.1`: 16개 전송, 15개 응답(손실 1개, 6%), 최대 28.201 ms. 응답은 seq 0~14가 모두 성공하여 손실 1개는 마지막 전송 패킷으로 보이며(`Ctrl+C` 직전으로 추정, 확인하지 못함) 복구 중 응답 중단은 보이지 않음.
 
 HQ-SW-2 복구 로그
+
 ![HQ-SW-2 복구 로그](images/vrrp-hq-retest-restore-sw2-log.png)
 
 HQ-SW-3 복구 로그
+
 ![HQ-SW-3 복구 로그](images/vrrp-hq-retest-restore-sw3-log.png)
 
 복구 구간 ping 통계
+
 ![복구 ping](images/vrrp-hq-retest-restore-ping.png)

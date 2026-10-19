@@ -11,9 +11,11 @@
 | DC-SW4-L3 | `show spanning-tree mst 1` | 보조 루트(8192), Po1 root | Bridge `0c0d.0b7c.425d` priority 8193, Root 4097(DC-SW3-L3), Po1 root FWD, Et7 Et8 designated FWD | 통과 |
 
 DC-SW3-L3 MSTP
+
 ![DC-SW3-L3 MSTP](images/Pasted%20image%2020261011233709.png)
 
 DC-SW4-L3 MSTP
+
 ![DC-SW4-L3 MSTP](images/Pasted%20image%2020261011233647.png)
 
 ## Wireshark 확인(MST BPDU)

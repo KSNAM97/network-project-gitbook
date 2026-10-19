@@ -14,7 +14,9 @@
 프로세스 11, Area 1.
 
 HQ-SW-2 OSPF
+
 ![HQ-SW-2 OSPF](images/Pasted%20image%2020261012194052.png)
 
 HQ-SW-3 OSPF
+
 ![HQ-SW-3 OSPF](images/Pasted%20image%2020261012194157.png)

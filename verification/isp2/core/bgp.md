@@ -16,45 +16,59 @@
 | ISP-2 전체 | `show ip bgp neighbors \| include hold` | iBGP 세션 timers 3/9 | P1, P2는 이웃 3개, PE-A, PE-B는 이웃 2개 모두 `Configured hold time is 9, keepalive interval is 3 seconds` | 통과 |
 
 ISP-2-P1 OSPF neighbor
+
 ![ISP-2-P1 OSPF neighbor](images/Pasted%20image%2020261017204533.png)
 
 ISP-2-PE-A OSPF neighbor
+
 ![ISP-2-PE-A OSPF neighbor](images/Pasted%20image%2020261017204551.png)
 
 ISP-2-PE-B OSPF neighbor
+
 ![ISP-2-PE-B OSPF neighbor](images/Pasted%20image%2020261017204542.png)
 
 ISP-2-P2 OSPF neighbor
+
 ![ISP-2-P2 OSPF neighbor](images/Pasted%20image%2020261017204600.png)
 
 ISP-2-P1 BGP summary
+
 ![ISP-2-P1 BGP summary](images/Pasted%20image%2020261017204615.png)
 
 ISP-2-P2 BGP summary
+
 ![ISP-2-P2 BGP summary](images/Pasted%20image%2020261017204627.png)
 
 ISP-2-PE-A BGP summary
+
 ![ISP-2-PE-A BGP summary](images/Pasted%20image%2020261017204645.png)
 
 ISP-2-PE-B BGP summary
+
 ![ISP-2-PE-B BGP summary](images/Pasted%20image%2020261017204654.png)
 
 ISP-2-P1 BGP neighbors Reflector
+
 ![ISP-2-P1 BGP neighbors Reflector](images/Pasted%20image%2020261017204706.png)
 
 ISP-2-P2 BGP neighbors Reflector
+
 ![ISP-2-P2 BGP neighbors Reflector](images/Pasted%20image%2020261017204715.png)
 
 ISP-2-P1 BGP neighbors hold
+
 ![ISP-2-P1 BGP neighbors hold](images/Pasted%20image%2020261017204732.png)
 
 ISP-2-PE-A BGP neighbors hold
+
 ![ISP-2-PE-A BGP neighbors hold](images/Pasted%20image%2020261017204754.png)
 
 ISP-2-PE-B BGP neighbors hold
+
 ![ISP-2-PE-B BGP neighbors hold](images/Pasted%20image%2020261017204744.png)
 
 ISP-2-P2 BGP neighbors hold
+
 ![ISP-2-P2 BGP neighbors hold](images/Pasted%20image%2020261017204801.png)
 
 ## 2. 사이트 eBGP 세션 (KAN-18, 2주 월)
@@ -70,45 +84,59 @@ ISP-2-P2 BGP neighbors hold
 | ISP-2-PE-A, PE-B | `show ip bgp vpnv4 vrf corp neighbors <사이트 주소> \| include hold` | eBGP 세션 timers 3/9 | PE-A는 HQ-R2, DC-R4 이웃 모두 hold time 9, keepalive 3초(Configured도 동일). PE-B는 BR1-R2, BR2-R2 이웃 모두 hold time 9, keepalive 3초(Configured도 동일) | 통과 |
 
 ISP-2-PE-A VRF summary
+
 ![ISP-2-PE-A VRF summary](images/site-ebgp-pe-a-summary.webp)
 
 ISP-2-PE-A HQ-R2 routes
+
 ![ISP-2-PE-A HQ-R2 routes](images/site-ebgp-pe-a-hq-routes.webp)
 
 ISP-2-PE-A HQ-R2 advertised-routes
+
 ![ISP-2-PE-A HQ-R2 advertised-routes](images/site-ebgp-pe-a-hq-advertised.webp)
 
 ISP-2-PE-A HQ-R2 hold
+
 ![ISP-2-PE-A HQ-R2 hold](images/site-ebgp-pe-a-hq-hold.webp)
 
 ISP-2-PE-A DC-R4 routes
+
 ![ISP-2-PE-A DC-R4 routes](images/site-ebgp-pe-a-dc-routes.webp)
 
 ISP-2-PE-A DC-R4 advertised-routes
+
 ![ISP-2-PE-A DC-R4 advertised-routes](images/site-ebgp-pe-a-dc-advertised.webp)
 
 ISP-2-PE-A DC-R4 hold
+
 ![ISP-2-PE-A DC-R4 hold](images/site-ebgp-pe-a-dc-hold.webp)
 
 ISP-2-PE-B VRF summary
+
 ![ISP-2-PE-B VRF summary](images/site-ebgp-pe-b-summary.webp)
 
 ISP-2-PE-B BR1-R2 routes
+
 ![ISP-2-PE-B BR1-R2 routes](images/site-ebgp-pe-b-br1-routes.webp)
 
 ISP-2-PE-B BR1-R2 advertised-routes
+
 ![ISP-2-PE-B BR1-R2 advertised-routes](images/site-ebgp-pe-b-br1-advertised.webp)
 
 ISP-2-PE-B BR1-R2 hold
+
 ![ISP-2-PE-B BR1-R2 hold](images/site-ebgp-pe-b-br1-hold.webp)
 
 ISP-2-PE-B BR2-R2 routes
+
 ![ISP-2-PE-B BR2-R2 routes](images/site-ebgp-pe-b-br2-routes.webp)
 
 ISP-2-PE-B BR2-R2 advertised-routes
+
 ![ISP-2-PE-B BR2-R2 advertised-routes](images/site-ebgp-pe-b-br2-advertised.webp)
 
 ISP-2-PE-B BR2-R2 hold
+
 ![ISP-2-PE-B BR2-R2 hold](images/site-ebgp-pe-b-br2-hold.webp)
 
 ## 3. PE 정책과 사이트 간 경로 (KAN-17, 3주 목)
@@ -119,25 +147,33 @@ ISP-2-PE-B BR2-R2 hold
 | ISP-2-P1, P2 | `show ip bgp vpnv4 all` | 모든 사이트 /16 반사, `Originator`, `Cluster list` 표시 | P1(200.200.200.2)과 P2(200.200.200.3) 모두 `10.1.0.0/16`, `10.2.0.0/16`(Next Hop 200.200.200.1), `10.3.0.0/16`, `10.4.0.0/16`(Next Hop 200.200.200.4)을 모두 `*>i`로 보유, RD 65200:1. 상세(`show ip bgp vpnv4 all 10.1.0.0`)에서 P1, P2 모두 `Received from a RR-client`, Next Hop 200.200.200.1(metric 2), RT 65200:1, 레이블 in/out nolabel/21006. PE-B는 P1(200.200.200.2), P2(200.200.200.3) 양쪽에서 2경로를 수신(`best #2`), 두 경로 모두 `Originator: 200.200.200.1`, `Cluster list: 2.2.2.2`. PE-A는 eBGP 경로(`external`, table corp, 레이블 in/out 21006/nolabel) | 통과 |
 
 ISP-2-P1 vpnv4 all
+
 ![ISP-2-P1 vpnv4 all](images/pe-policy-p1.png)
 
 ISP-2-P2 vpnv4 all
+
 ![ISP-2-P2 vpnv4 all](images/pe-policy-p2.png)
 
 ISP-2-PE-A vpnv4 all
+
 ![ISP-2-PE-A vpnv4 all](images/pe-policy-pe-a.png)
 
 ISP-2-PE-B vpnv4 all
+
 ![ISP-2-PE-B vpnv4 all](images/pe-policy-pe-b.png)
 
 ISP-2-P1 vpnv4 all 10.1.0.0 상세
+
 ![ISP-2-P1 vpnv4 all 10.1.0.0 상세](images/pe-policy-detail-p1.webp)
 
 ISP-2-P2 vpnv4 all 10.1.0.0 상세
+
 ![ISP-2-P2 vpnv4 all 10.1.0.0 상세](images/pe-policy-detail-p2.png)
 
 ISP-2-PE-A vpnv4 all 10.1.0.0 상세
+
 ![ISP-2-PE-A vpnv4 all 10.1.0.0 상세](images/pe-policy-detail-pe-a.png)
 
 ISP-2-PE-B vpnv4 all 10.1.0.0 상세
+
 ![ISP-2-PE-B vpnv4 all 10.1.0.0 상세](images/pe-policy-detail-pe-b.webp)

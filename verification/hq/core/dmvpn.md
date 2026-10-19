@@ -19,49 +19,65 @@
 Phase 3 shortcut 검증은 2026-10-18에 HQ-R2에서 BR1-R1, BR2-R2 대상으로 수행(BR1-R1 ↔ BR2-R2는 `verification/br1/core/dmvpn.md`).
 
 HQ-R2 show ip ospf interface tunnel 0
+
 ![HQ-R2 OSPF interface tunnel 0](images/dmvpn-hq-r2-ospf-interface.webp)
 
 HQ-R2 dmvpn
+
 ![HQ-R2 dmvpn](images/dmvpn-hq-r2-dmvpn.webp)
 
 HQ-R2 nhrp
+
 ![HQ-R2 nhrp](images/dmvpn-hq-r2-nhrp.png)
 
 HQ-R2 isakmp
+
 ![HQ-R2 isakmp](images/dmvpn-hq-r2-isakmp.webp)
 
 HQ-R2 ipsec
+
 ![HQ-R2 ipsec](images/dmvpn-hq-r2-ipsec.webp)
 
 HQ-R2 ospf-neighbor
+
 ![HQ-R2 ospf-neighbor](images/dmvpn-hq-r2-ospf-neighbor.webp)
 
 HQ-R2 ping 12.12.12.1
+
 ![HQ-R2 ping 12.12.12.1](images/dmvpn-hq-r2-shortcut-ping.webp)
 
 HQ-R2 traceroute 12.12.12.1
+
 ![HQ-R2 traceroute 12.12.12.1](images/dmvpn-hq-r2-shortcut-traceroute.png)
 
 HQ-R2 show dmvpn(shortcut 후)
+
 ![HQ-R2 show dmvpn(shortcut 후)](images/dmvpn-hq-r2-shortcut-dmvpn.webp)
 
 HQ-R2 show ip nhrp(shortcut 후)
+
 ![HQ-R2 show ip nhrp(shortcut 후)](images/dmvpn-hq-r2-shortcut-nhrp.png)
 
 HQ-R2 show crypto isakmp sa(shortcut 후)
+
 ![HQ-R2 show crypto isakmp sa(shortcut 후)](images/dmvpn-hq-r2-shortcut-isakmp.png)
 
 HQ-R2 ping 13.13.13.2
+
 ![HQ-R2 ping 13.13.13.2](images/dmvpn-hq-r2-shortcut-br2-ping.webp)
 
 HQ-R2 traceroute 13.13.13.2
+
 ![HQ-R2 traceroute 13.13.13.2](images/dmvpn-hq-r2-shortcut-br2-traceroute.png)
 
 HQ-R2 show dmvpn(BR2 shortcut 후)
+
 ![HQ-R2 show dmvpn(BR2 shortcut 후)](images/dmvpn-hq-r2-shortcut-br2-dmvpn.webp)
 
 HQ-R2 show ip nhrp(BR2 shortcut 후)
+
 ![HQ-R2 show ip nhrp(BR2 shortcut 후)](images/dmvpn-hq-r2-shortcut-br2-nhrp.png)
 
 HQ-R2 show crypto isakmp sa(BR2 shortcut 후)
+
 ![HQ-R2 show crypto isakmp sa(BR2 shortcut 후)](images/dmvpn-hq-r2-shortcut-br2-isakmp.webp)

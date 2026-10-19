@@ -20,28 +20,37 @@
 허용 항목 10은 BR1 호스트의 `nslookup` 2건, deny 항목 50은 `nc`와 `ping` 등 3건의 시험 트래픽과 대응함.
 
 DC-SW3-L3 ip access-group out 거부
+
 ![DC-SW3-L3 ip access-group out 거부](images/acl-ceos-svi-out.png)
 
 DC-SW3-L3 ip access-group in 거부
+
 ![DC-SW3-L3 ip access-group in 거부](images/acl-ceos-port-in.png)
 
 DC-R1 dns-only
+
 ![DC-R1 dns-only](images/acl-dc-r1.png)
 
 DC-R2 dns-only
+
 ![DC-R2 dns-only](images/acl-dc-r2.png)
 
 DC-R3 dns-only
+
 ![DC-R3 dns-only](images/acl-dc-r3.png)
 
 DC-R4 dns-only
+
 ![DC-R4 dns-only](images/acl-dc-r4.webp)
 
 호스트 nslookup, ping, nc 시험
+
 ![호스트 nslookup, ping, nc 시험](images/acl-host-test.webp)
 
 DC-R2 deny 로그
+
 ![DC-R2 deny 로그](images/acl-dc-r2-deny-log.webp)
 
 DC-R2 ACL 매치 카운트
+
 ![DC-R2 ACL 매치 카운트](images/acl-dc-r2-matches.png)

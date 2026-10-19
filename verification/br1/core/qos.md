@@ -14,43 +14,57 @@
 | BR1-R1, BR1-R2 | `show policy-map interface gi2/0`(해당 시) | 정책 미적용(제외 대상) | BR1-R1, BR1-R2 모두 `gi2/0`(BR1-R1↔R2 라우터 간 링크)의 출력이 비어 있어 정책 미적용 | 통과 |
 
 BR1-R1 show policy-map
+
 ![BR1-R1 show policy-map](images/qos-br1-r1-policy-map.png)
 
 BR1-R1 show policy-map interface gi0/0
+
 ![BR1-R1 show policy-map interface gi0/0](images/qos-br1-r1-interface-gi0-0.png)
 
 BR1-R2 show policy-map
+
 ![BR1-R2 show policy-map](images/qos-br1-r2-policy-map.png)
 
 BR1-R2 show policy-map interface gi0/0
+
 ![BR1-R2 show policy-map interface gi0/0](images/qos-br1-r2-interface-gi0-0.png)
 
 BR1-R1 show policy-map interface gi1/0 (DNS 질의 후)
+
 ![BR1-R1 show policy-map interface gi1/0](images/qos-br1-r1-gi1-0-dns.png)
 
 BR1-R1 gi1/0 (DNS 질의 후, cm-business 80)
+
 ![BR1-R1 gi1/0 (DNS 질의 후, cm-business 80)](images/qos-br1-r1-gi1-0-dns-after.png)
 
 BR1-R1 gi0/0 (cm-business 0)
+
 ![BR1-R1 gi0/0 (cm-business 0)](images/qos-br1-r1-gi0-0.png)
 
 BR1-R2 gi0/0
+
 ![BR1-R2 gi0/0](images/qos-br1-r2-gi0-0.png)
 
 BR1-R2 gi1/0
+
 ![BR1-R2 gi1/0](images/qos-br1-r2-gi1-0.webp)
 
 BR1-R2 show policy-map interface gi2/0 (정책 미적용)
+
 ![BR1-R2 show policy-map interface gi2/0](images/qos-br1-r2-gi2-0-excluded.png)
 
 BR1-R1 show policy-map interface gi2/0 (정책 미적용)
+
 ![BR1-R1 show policy-map interface gi2/0](images/qos-br1-r1-gi2-0-excluded.png)
 
 DC-R2 gi0/0 병목 시험 중(class-default drop 578)
+
 ![DC-R2 gi0/0 병목 시험 중(class-default drop 578)](images/qos-bottleneck-dc-r2-drop.webp)
 
 BR1-PC1 큰 트래픽 중 nslookup
+
 ![BR1-PC1 큰 트래픽 중 nslookup](images/qos-bottleneck-br1-pc1-dns.webp)
 
 DC-R2 gi0/0 병목 시험 후(class-default drop 1333, cm-business drop 0)
+
 ![DC-R2 gi0/0 병목 시험 후(class-default drop 1333, cm-business drop 0)](images/qos-bottleneck-dc-r2-after.png)

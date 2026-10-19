@@ -16,37 +16,49 @@
 장애 시 BGP 세션이 내려가 기본 경로가 철회되고 OSPF 기본 경로 광고가 ISP-2로 전환되는지는 [scenarios/](../../scenarios/)에서 확인.
 
 BR2-R1 BGP summary
+
 ![BR2-R1 BGP summary](images/isp-link-br2-r1-summary.webp)
 
 BR2-R1 기본 경로(show ip route 0.0.0.0)
+
 ![BR2-R1 기본 경로(show ip route 0.0.0.0)](images/isp-link-br2-r1-default-route.webp)
 
 BR2-R1 advertised-routes
+
 ![BR2-R1 advertised-routes](images/isp-link-br2-r1-advertised.webp)
 
 BR2-R1 route-map
+
 ![BR2-R1 route-map](images/isp-link-br2-r1-route-map.png)
 
 BR2-R1 prefix-list
+
 ![BR2-R1 prefix-list](images/isp-link-br2-r1-prefix-list.png)
 
 BR2-R1 OSPF database external
+
 ![BR2-R1 OSPF database external](images/isp-link-br2-r1-ospf-external.webp)
 
 BR2-R2 BGP summary
+
 ![BR2-R2 BGP summary](images/isp-link-br2-r2-summary.webp)
 
 BR2-R2 기본 경로(show ip route 0.0.0.0)
+
 ![BR2-R2 기본 경로(show ip route 0.0.0.0)](images/isp-link-br2-r2-default-route.webp)
 
 BR2-R2 advertised-routes
+
 ![BR2-R2 advertised-routes](images/isp-link-br2-r2-advertised.webp)
 
 BR2-R2 route-map
+
 ![BR2-R2 route-map](images/isp-link-br2-r2-route-map.png)
 
 BR2-R2 prefix-list
+
 ![BR2-R2 prefix-list](images/isp-link-br2-r2-prefix-list.png)
 
 BR2-R2 OSPF database external
+
 ![BR2-R2 OSPF database external](images/isp-link-br2-r2-ospf-external.png)

@@ -18,28 +18,37 @@
 Phase 3 shortcut 검증은 2026-10-18에 수행.
 
 BR2-R2 show ip ospf interface tunnel 0
+
 ![BR2-R2 OSPF interface tunnel 0](images/dmvpn-br2-r2-ospf-interface.webp)
 
 BR2-R2 dmvpn
+
 ![BR2-R2 dmvpn](images/dmvpn-br2-r2-dmvpn.webp)
 
 BR2-R2 nhrp
+
 ![BR2-R2 nhrp](images/dmvpn-br2-r2-nhrp.png)
 
 BR2-R2 isakmp
+
 ![BR2-R2 isakmp](images/dmvpn-br2-r2-isakmp.png)
 
 BR2-R2 ipsec
+
 ![BR2-R2 ipsec](images/dmvpn-br2-r2-ipsec.webp)
 
 BR2-R2 ospf-neighbor
+
 ![BR2-R2 ospf-neighbor](images/dmvpn-br2-r2-ospf-neighbor.webp)
 
 BR2-R2 show dmvpn(shortcut 후)
+
 ![BR2-R2 show dmvpn(shortcut 후)](images/dmvpn-br2-r2-shortcut-dmvpn.png)
 
 BR2-R2 show ip nhrp(shortcut 후)
+
 ![BR2-R2 show ip nhrp(shortcut 후)](images/dmvpn-br2-r2-shortcut-nhrp.png)
 
 BR2-R2 show crypto isakmp sa(shortcut 후)
+
 ![BR2-R2 show crypto isakmp sa(shortcut 후)](images/dmvpn-br2-r2-shortcut-isakmp.png)

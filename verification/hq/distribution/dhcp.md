@@ -12,23 +12,29 @@
 | 호스트 | `udhcpc -i eth0`, `ip addr`, `cat /etc/resolv.conf` | 풀 범위 주소와 `resolv.conf` DNS 두 대 | HQ-PC1 10.1.10.100(서버 10.1.10.2, Active 범위), HQ-PC2 10.1.20.164(서버 10.1.20.3, Standby 범위), lease time 86400. 기본 경로 10.1.10.1, 10.1.20.1(VIP), resolv.conf search lab.local, nameserver 10.2.50.10과 10.2.50.11 | 통과 |
 
 HQ-SW-2 DHCP POOL
+
 ![HQ](images/Pasted%20image%2020261013194122.png)
 
 HQ-SW-2 DHCP BINDING
+
 ![HQ](images/Pasted%20image%2020261013194732.png)
 
 HQ-SW-3 DHCP POOL
+
 ![HQ](images/Pasted%20image%2020261013194237.png)
 
 HQ-SW-3 DHCP BINDING
+
 ![HQ](images/Pasted%20image%2020261013194743.png)
 
 HQ-PC1
+
 ![HQ](images/Pasted%20image%2020261013194518.png)
 
 ![HQ](images/Pasted%20image%2020261013194956.png)
 
 HQ-PC2
+
 ![HQ](images/Pasted%20image%2020261013194442.png)
 
 ![HQ](images/Pasted%20image%2020261013195022.png)
@@ -52,9 +58,11 @@ HQ-PC2
 - Active 서버(HQ-SW-2)가 먼저 응답해 Active 풀 주소(`.100`)를 받음. Standby의 Offer는 늦게 도착(`.165`, Standby 풀).
 
 HQ-PC1 Wireshark(`dhcp`): Discover, Offer, Request, ACK
+
 ![HQ-PC1 DHCP DORA](images/dhcp-wireshark-dora.webp)
 
 HQ-PC1 `udhcpc -i eth0`
+
 ![HQ-PC1 udhcpc](images/dhcp-udhcpc-hq-pc1.webp)
 
 ### Offer 패킷 상세(프레임 23, HQ-SW-2 `10.1.10.2` → `10.1.10.100`)와 Aruba 비교
@@ -72,7 +80,9 @@ HQ-PC1 `udhcpc -i eth0`
 - 같은 설계 값을 주지만 벤더별로 옵션 구성(Aruba는 Option 28 포함)과 Next server 필드가 다름.
 
 Offer 프레임 23(HQ-SW-2, Cisco)
+
 ![HQ Offer 상세](images/dhcp-offer-detail.webp)
 
 Offer 옵션 3, 6, 15 펼친 화면(프레임 23)
+
 ![HQ Offer 옵션](images/dhcp-offer-options.webp)

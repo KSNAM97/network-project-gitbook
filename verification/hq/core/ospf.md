@@ -13,11 +13,13 @@
 프로세스 11, Area 1, Router ID는 장비의 `lo0`.
 
 HQ-R1 OSPF
+
 ![HQ-R1 OSPF](images/Pasted%20image%2020261012193920.png)
 
 ![route ospf](images/Pasted%20image%2020261012194309.png)
 
 HQ-R2 OSPF
+
 ![HQ-R2 OSPF](images/Pasted%20image%2020261012193941.png)
 
 ![route ospf](images/Pasted%20image%2020261012194355.png)
@@ -44,9 +46,11 @@ HQ-R2 OSPF
 - 이웃 상태 `FULL`은 패킷이 아니라 `show ip ospf neighbor` 출력(위 표)으로 확인. Hello 패킷 안의 값은 아래 "Hello 패킷 상세" 참조.
 
 Wireshark(`ospf`): 이웃 수립 과정(Hello → DBD → LSR → LSU → LSAck)
+
 ![HQ OSPF 이웃 수립](images/ospf-wireshark-adjacency.webp)
 
 Wireshark(`ospf`): 수립 후 Hello 10초 간격, LS Update, LS Acknowledge
+
 ![HQ OSPF Hello, LSU](images/ospf-wireshark-hello-lsu.webp)
 
 ### Hello 패킷 상세(프레임 863, HQ-R2 `10.1.0.18` → `224.0.0.5`)
@@ -65,4 +69,5 @@ Wireshark(`ospf`): 수립 후 Hello 10초 간격, LS Update, LS Acknowledge
 - Area ID는 `OSPF Header`를 펼친 화면이 아니라 패킷 바이트에서 읽은 값.
 
 Wireshark(`ospf.msg.hello`): Hello 패킷 상세
+
 ![HQ OSPF Hello 상세](images/ospf-wireshark-hello-detail.webp)

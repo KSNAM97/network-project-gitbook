@@ -11,7 +11,9 @@
 | BR2-SW2-L3 | `show spanning-tree mst 1` | 보조 루트(8192), 루트는 SW1 | priority 8193(8192 sysid 1), 루트 4097(BR2-SW1-L3), Po1 Root FWD, Gi2/0 Desg FWD | 통과 |
 
 BR2-SW1-L3 STP
+
 ![BR2-SW1-L3 STP](images/Pasted%20image%2020261013185140.png)
 
 BR2-SW2-L3 STP
+
 ![BR2-SW2-L3 STP](images/Pasted%20image%2020261013185200.png)

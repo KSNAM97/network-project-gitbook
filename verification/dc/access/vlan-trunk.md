@@ -15,19 +15,25 @@
 | DC-SW2-L2 | `show ip interface brief` | Vlan100 10.2.100.22/24 up | Vlan100 10.2.100.22/24 up/up | 통과 |
 
 DC-SW1-L2 TRUNK
+
 ![DC-SW1-L2 TRUNK](images/Pasted%20image%2020261011232918.png)
 
 DC-SW1-L2 VLAN
+
 ![DC-SW1-L2 VLAN](images/Pasted%20image%2020261011233005.png)
 
 DC-SW1-L2 INTERFACE
+
 ![DC-SW1-L2 INTERFACE](images/Pasted%20image%2020261011233048.png)
 
 DC-SW2-L2 TRUNK
+
 ![DC-SW2-L2 TRUNK](images/Pasted%20image%2020261011233201.png)
 
 DC-SW2-L2 VLAN
+
 ![DC-SW2-L2 VLAN](images/Pasted%20image%2020261011233214.png)
 
 DC-SW2-L2 INTERFACE
+
 ![DC-SW2-L2 INTERFACE](images/Pasted%20image%2020261011233223.png)

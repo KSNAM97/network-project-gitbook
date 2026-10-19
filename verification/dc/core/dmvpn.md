@@ -15,19 +15,25 @@
 | DC-R2 | `show ip ospf interface tunnel 0` | Hub priority 255, DR, Spoke 3대와 인접 | Tunnel0 up/up, 172.16.0.1/24, Area 0, 프로세스 10, Router ID 10.10.10.2, BROADCAST, State DR, Priority 255, DR는 자기 자신(10.10.10.2, 172.16.0.1). Neighbor Count 3, Adjacent neighbor 3(11.11.11.2, 12.12.12.1, 13.13.13.2) | 통과 |
 
 DC-R2 show ip ospf interface tunnel 0
+
 ![DC-R2 OSPF interface tunnel 0](images/dmvpn-dc-r2-ospf-interface.webp)
 
 DC-R2 dmvpn
+
 ![DC-R2 dmvpn](images/dmvpn-dc-r2-dmvpn.webp)
 
 DC-R2 nhrp
+
 ![DC-R2 nhrp](images/dmvpn-dc-r2-nhrp.png)
 
 DC-R2 isakmp
+
 ![DC-R2 isakmp](images/dmvpn-dc-r2-isakmp.png)
 
 DC-R2 ipsec
+
 ![DC-R2 ipsec](images/dmvpn-dc-r2-ipsec.webp)
 
 DC-R2 ospf-neighbor
+
 ![DC-R2 ospf-neighbor](images/dmvpn-dc-r2-ospf-neighbor.webp)

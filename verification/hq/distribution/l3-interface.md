@@ -21,7 +21,9 @@
 `show ip interface brief`는 서브넷 길이(/30, /24)를 보여 주지 않으므로 마스크는 컨피그 파일과 `show running-config interface`로 확인.
 
 HQ-SW-2 INTERFACE
+
 ![HQ-SW-2 INTERFACE](images/hq-sw-2-ip-int-br.webp)
 
 HQ-SW-3 INTERFACE
+
 ![HQ-SW-3 INTERFACE](images/hq-sw-3-ip-int-br.webp)

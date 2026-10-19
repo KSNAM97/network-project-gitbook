@@ -12,9 +12,11 @@
 
 
 HQ-SW-2 MSTP
+
 ![HQ-SW-2 MSTP](images/Pasted%20image%2020261011235155.png)
 
 HQ-SW-3 MSTP
+
 ![HQ-SW-3 MSTP](images/Pasted%20image%2020261011235205.png)
 
 ## Wireshark 확인(MST BPDU)

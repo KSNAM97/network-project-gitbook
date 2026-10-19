@@ -12,23 +12,31 @@
 | 호스트 | `udhcpc -i eth0`, `ip addr`, `cat /etc/resolv.conf` | 풀 범위 주소와 `resolv.conf` DNS 두 대 | BR2-PC1 10.4.10.100(서버 10.4.10.2), BR2-PC2 10.4.20.100(서버 10.4.20.2), lease time 86400, resolv.conf search lab.local, nameserver 10.2.50.10과 10.2.50.11 | 통과 |
 
 BR2-SW1-L3  DHCP POOL
+
 ![BR2](images/Pasted%20image%2020261013203615.png)
 
 BR2-SW1-L3  DHCP BINDING
+
 ![BR2](images/Pasted%20image%2020261013203626.png)
 
 BR2-SW2-L3 DHCP POOL
+
 ![BR2](images/Pasted%20image%2020261013203653.png)
 
 BR2-SW2-L3 DHCP BINDING
+
 ![BR2](images/Pasted%20image%2020261013203705.png)
 
 BR2-PC1
+
 ![BR2](images/Pasted%20image%2020261013203445.png)
+
 ![BR2](images/Pasted%20image%2020261013203510.png)
 
 BR2-PC2
+
 ![BR2](images/Pasted%20image%2020261013203539.png)
+
 ![BR2](images/Pasted%20image%2020261013203549.png)
 
 ## Wireshark DORA 확인
@@ -50,7 +58,9 @@ BR2-PC2
 - 두 서버(Active, Standby)가 모두 Offer를 보내며 먼저 도착한 Offer를 선택함. 이 시험에서는 Standby가 먼저 응답해 Standby 풀 주소를 받았고, 이전 시험(`10.4.10.100`, 서버 `10.4.10.2`)과 서버가 달랐음. 어느 서버가 먼저 응답하는지는 고정이 아님.
 
 BR2-PC1 Wireshark(`dhcp`): Discover, Offer, Request, ACK
+
 ![BR2-PC1 DHCP DORA](images/dhcp-wireshark-dora.webp)
 
 BR2-PC1 `udhcpc -i eth0`
+
 ![BR2-PC1 udhcpc](images/dhcp-udhcpc-br2-pc1.webp)

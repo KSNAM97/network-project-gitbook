@@ -12,15 +12,19 @@
 
 프로세스 10, Area 0, Router ID는 장비의 `lo0`.
 DC-R1 OSPF
+
 ![DC-R1 OSPF](images/Pasted%20image%2020261012191727.png)
 
 DC-R2 OSPF
+
 ![DC-R2 OSPF](images/Pasted%20image%2020261012191753.png)
 
 DC-R3 OSPF
+
 ![DC-R3 OSPF](images/Pasted%20image%2020261012191821.png)
 
 DC-R4 OSPF
+
 ![DC-R4 OSPF](images/Pasted%20image%2020261012191853.png)
 
 ## Wireshark 확인(OSPF Hello, Area 0)

@@ -11,4 +11,5 @@
 | BR1-SW3-L3 | `show spanning-tree mst` | 기본 priority, 루트는 SW1, 호스트 포트 Designated Forwarding | MST1 VLAN 10,20,100, 루트 08:00:09:48:bf:8f(BR1-SW1-L3, priority 4096), 자기 priority 32768(기본). 1/1/1 Root FWD, 1/1/2 Alternate BLK, 1/1/6과 1/1/7 Designated FWD(MST0도 루트 SW1) | 통과 |
 
 BR1-SW3-L3 MSTP
+
 ![BR1-SW3-L3 MSTP](images/Pasted%20image%2020261017184609.png)

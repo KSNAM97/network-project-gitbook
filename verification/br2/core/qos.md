@@ -14,31 +14,41 @@
 | BR2-R1, BR2-R2 | `show policy-map interface gi2/0`(해당 시) | 정책 미적용(제외 대상) | BR2-R1, BR2-R2 모두 `gi2/0`(BR2-R1↔R2 라우터 간 링크)의 출력이 비어 있어 정책 미적용 | 통과 |
 
 BR2-R1 show policy-map
+
 ![BR2-R1 show policy-map](images/qos-br2-r1-policy-map.png)
 
 BR2-R1 show policy-map interface gi0/0
+
 ![BR2-R1 show policy-map interface gi0/0](images/qos-br2-r1-interface-gi0-0.png)
 
 BR2-R2 show policy-map
+
 ![BR2-R2 show policy-map](images/qos-br2-r2-policy-map.png)
 
 BR2-R2 show policy-map interface gi0/0
+
 ![BR2-R2 show policy-map interface gi0/0](images/qos-br2-r2-interface-gi0-0.png)
 
 BR2-R2 gi0/0 (DNS 질의 후, cm-business 40)
+
 ![BR2-R2 gi0/0 (DNS 질의 후, cm-business 40)](images/qos-br2-r2-gi0-0-dns.png)
 
 BR2-R1 gi0/0 (DNS 질의 후, cm-business 0)
+
 ![BR2-R1 gi0/0 (DNS 질의 후, cm-business 0)](images/qos-br2-r1-gi0-0.png)
 
 BR2-R1 gi1/0
+
 ![BR2-R1 gi1/0](images/qos-br2-r1-gi1-0.png)
 
 BR2-R2 gi1/0
+
 ![BR2-R2 gi1/0](images/qos-br2-r2-gi1-0.png)
 
 BR2-R1 show policy-map interface gi2/0 (정책 미적용)
+
 ![BR2-R1 show policy-map interface gi2/0 (정책 미적용)](images/qos-br2-r1-gi2-0-excluded.png)
 
 BR2-R2 show policy-map interface gi2/0 (정책 미적용)
+
 ![BR2-R2 show policy-map interface gi2/0 (정책 미적용)](images/qos-br2-r2-gi2-0-excluded.png)

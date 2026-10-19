@@ -12,10 +12,12 @@
 | BR1-SW2-L3 | `show spanning-tree mst` | 보조 루트(8192), 루트는 SW1 | MST1 Bridge priority 8192, Root 08:00:09:48:bf:8f(BR1-SW1-L3, 4096), Root 포트 lag1(cost 20000) FWD, 1/1/5 Designated FWD(MST0에서는 Alternate BLK) | 통과 |
 
 BR1-SW1-L3 MSTP
+
 ![BR1-SW1-L3 MSTP](images/Pasted%20image%2020261017185408.png)
 
 
 BR1-SW2-L3 MSTP
+
 ![BR1-SW2-L3 MSTP](images/Pasted%20image%2020261017185420.png)
 
 ## Wireshark 확인(MST BPDU)
@@ -37,13 +39,17 @@ BR1-SW2-L3 MSTP
 - MST Extension은 상세 트리를 펼친 화면이 아니라 패킷 바이트에서 해석한 값(`62 72 31` = `br1`, 인스턴스 1 Regional Root 필드 `10 01` = 우선순위 4096 + 인스턴스 ID 1).
 
 트렁크 Wireshark(`stp`): BPDU 2초 간격
+
 ![트렁크 STP 목록](images/stp-wireshark-trunk-list.webp)
 
 트렁크 BPDU 상세(프레임 32386)
+
 ![트렁크 BPDU 상세](images/stp-wireshark-trunk-bpdu.webp)
 
 호스트 링크 Wireshark(`stp`)
+
 ![호스트 링크 STP](images/stp-wireshark-host-link.webp)
 
 호스트 링크 BPDU 상세(프레임 2682)
+
 ![호스트 링크 BPDU](images/stp-wireshark-host-bpdu.webp)

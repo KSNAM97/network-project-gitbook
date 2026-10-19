@@ -35,37 +35,49 @@
 
 
 링크 71 Wireshark(`mpls`) 평상시: 표시 0개
+
 ![링크 71 Wireshark(`mpls`) 평상시: 표시 0개](images/mpls-path-wireshark-baseline-empty.webp)
 
 ISP-1-PE-A `show mpls ldp neighbor`
+
 ![ISP-1-PE-A `show mpls ldp neighbor`](images/mpls-path-ldp-neighbor.webp)
 
 ISP-1-PE-A `show mpls forwarding-table`
+
 ![ISP-1-PE-A `show mpls forwarding-table`](images/mpls-path-forwarding-table.webp)
 
 HQ-PC1 `ping`(TTL 60, 터널 경유)
+
 ![HQ-PC1 `ping`(TTL 60, 터널 경유)](images/mpls-path-ping-before.webp)
 
 DC-R2 `show ip int tunnel 0`(administratively down)
+
 ![DC-R2 `show ip int tunnel 0`(administratively down)](images/mpls-path-tunnel0-down.webp)
 
 HQ-PC1 `ping` TTL 60에서 57로 전환, 통계
+
 ![HQ-PC1 `ping` TTL 60에서 57로 전환, 통계](images/mpls-path-ping-after.webp)
 
 Wireshark: MPLS 레이블 스택(12004, 14007)
+
 ![Wireshark: MPLS 레이블 스택(12004, 14007)](images/mpls-path-wireshark-label-stack.webp)
 
 DC-R2 `show ip int tunnel 0`(복구, up)
+
 ![DC-R2 `show ip int tunnel 0`(복구, up)](images/mpls-path-tunnel0-up.webp)
 
 ISP-1-PE-B `show ip bgp vpnv4 vrf corp labels`(10.3.0.0/16 In label 14007)
+
 ![ISP-1-PE-B `show ip bgp vpnv4 vrf corp labels`(10.3.0.0/16 In label 14007)](images/mpls-path-pe-b-vpnv4-labels.webp)
 
 링크 73 Wireshark(`mpls`): VPN 레이블 14007 하나만(PHP)
+
 ![링크 73 Wireshark(`mpls`): VPN 레이블 14007 하나만(PHP)](images/mpls-path-wireshark-link73-php.webp)
 
 ISP-1-PE-A `show interfaces gi0/0`(administratively down)
+
 ![ISP-1-PE-A `show interfaces gi0/0`(administratively down)](images/mpls-path-pe-a-gi0-0-down.webp)
 
 ISP-1-PE-A `show mpls ldp neighbor`(P2만 남음)
+
 ![ISP-1-PE-A `show mpls ldp neighbor`(P2만 남음)](images/mpls-path-ldp-neighbor-p1-down.webp)

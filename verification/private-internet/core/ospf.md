@@ -16,25 +16,33 @@
 | DC-R2 | `ping <상대 NBMA>` | DMVPN NBMA 주소(203.0.113.x) 간 도달 | 203.0.113.9(HQ-R2), 203.0.113.13(BR1-R1), 203.0.113.17(BR2-R2) 모두 5/5(100%), RTT 평균 82~92 ms | 통과 |
 
 Private-net OSPF neighbor
+
 ![Private-net OSPF neighbor](images/Pasted%20image%2020261017202519.png)
 
 DC-R1 OSPF neighbor
+
 ![DC-R1 OSPF neighbor](images/Pasted%20image%2020261017202610.png)
 
 DC-R2 OSPF neighbor
+
 ![DC-R2 OSPF neighbor](images/Pasted%20image%2020261017202606.png)
 
 HQ-R2 OSPF neighbor
+
 ![HQ-R2 OSPF neighbor](images/Pasted%20image%2020261017202554.png)
 
 BR1-R1 OSPF neighbor
+
 ![BR1-R1 OSPF neighbor](images/Pasted%20image%2020261017202558.png)
 
 BR2-R2 OSPF neighbor
+
 ![BR2-R2 OSPF neighbor](images/Pasted%20image%2020261017202602.png)
 
 DC-R2 NBMA ping(HQ-R2, BR1-R1, BR2-R2)
+
 ![DC-R2 NBMA ping(HQ-R2, BR1-R1, BR2-R2)](images/Pasted%20image%2020261017202629.png)
 
 BR1-R1 프로세스 2 Router ID 거부(in use by ospf process 12)
+
 ![BR1-R1 프로세스 2 Router ID 거부](images/pi-router-id-conflict.webp)

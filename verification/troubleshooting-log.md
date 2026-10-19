@@ -76,45 +76,59 @@
 증거 캡처
 
 폭주 초기 Wireshark(`vrrp`): 5초 시점에 이미 광고가 밀리초 간격
+
 ![폭주 초기 Wireshark(`vrrp`): 5초 시점에 이미 광고가 밀리초 간격](images/troubleshooting-br1-loop-storm-wireshark-1.webp)
 
 폭주 지속: 311초 시점 프레임 58,004번
+
 ![폭주 지속: 311초 시점 프레임 58,004번](images/troubleshooting-br1-loop-storm-wireshark-2.webp)
 
 폭주 지속: 529초 시점 프레임 97,000번대
+
 ![폭주 지속: 529초 시점 프레임 97,000번대](images/troubleshooting-br1-loop-storm-wireshark-3.webp)
 
 BR1-SW1-L3 `show spanning-tree`(자신이 루트)
+
 ![BR1-SW1-L3 `show spanning-tree`(자신이 루트)](images/troubleshooting-br1-loop-stp-sw1-before.png)
 
 BR1-SW3-L3 `show spanning-tree`(자신이 루트, 모든 포트 Forwarding)
+
 ![BR1-SW3-L3 `show spanning-tree`(자신이 루트, 모든 포트 Forwarding)](images/troubleshooting-br1-loop-stp-sw3-before.png)
 
 BR1-SW2-L3 `show spanning-tree`
+
 ![BR1-SW2-L3 `show spanning-tree`](images/troubleshooting-br1-loop-stp-sw2-before.webp)
 
 BR1-SW3-L3 `show spanning-tree mst-config`(세 장비 동일)
+
 ![BR1-SW3-L3 `show spanning-tree mst-config`(세 장비 동일)](images/troubleshooting-br1-loop-mst-config-sw3.png)
 
 BR1-SW3-L3 `1/1/1` Administratively down
+
 ![BR1-SW3-L3 `1/1/1` Administratively down](images/troubleshooting-br1-loop-sw3-port-down.webp)
 
 STP 재시작 후 BR1-SW3-L3(Root가 SW-1로 변경)
+
 ![STP 재시작 후 BR1-SW3-L3(Root가 SW-1로 변경)](images/troubleshooting-br1-loop-stp-sw3-restart.webp)
 
 `1/1/1` 복구 후 BR1-SW3-L3
+
 ![`1/1/1` 복구 후 BR1-SW3-L3](images/troubleshooting-br1-loop-stp-sw3-after.webp)
 
 복구 후 BR1-SW2-L3(`1/1/5` Alternate/Blocking)
+
 ![복구 후 BR1-SW2-L3(`1/1/5` Alternate/Blocking)](images/troubleshooting-br1-loop-stp-sw2-after.webp)
 
 복구 후 BR1-SW2-L3 `show spanning-tree mst`
+
 ![복구 후 BR1-SW2-L3 `show spanning-tree mst`](images/troubleshooting-br1-loop-mst-sw2-after.webp)
 
 복구 후 BR1-SW3-L3 `show spanning-tree mst`
+
 ![복구 후 BR1-SW3-L3 `show spanning-tree mst`](images/troubleshooting-br1-loop-mst-sw3-after.webp)
 
 폭주 해소 후 Wireshark(광고 1초 간격)
+
 ![폭주 해소 후 Wireshark(광고 1초 간격)](images/troubleshooting-br1-loop-storm-ended.webp)
 
 ## 8. Hub 장애 후 shortcut이 설계 기대보다 일찍 끊김

@@ -16,37 +16,49 @@
 장애 시 BGP 세션이 내려가 기본 경로가 철회되고 OSPF 기본 경로 광고가 ISP-2로 전환되는지는 [scenarios/](../../scenarios/)에서 확인.
 
 DC-R3 BGP summary
+
 ![DC-R3 BGP summary](images/Pasted%20image%2020261017234216.png)
 
 DC-R3 기본 경로(show ip route 0.0.0.0)
+
 ![DC-R3 기본 경로(show ip route 0.0.0.0)](images/Pasted%20image%2020261017234231.png)
 
 DC-R3 advertised-routes
+
 ![DC-R3 advertised-routes](images/Pasted%20image%2020261017234244.png)
 
 DC-R3 route-map
+
 ![DC-R3 route-map](images/Pasted%20image%2020261017234251.png)
 
 DC-R3 OSPF database external
+
 ![DC-R3 OSPF database external](images/Pasted%20image%2020261017234301.png)
 
 DC-R4 BGP summary
+
 ![DC-R4 BGP summary](images/Pasted%20image%2020261017234957.png)
 
 DC-R4 기본 경로(show ip route 0.0.0.0)
+
 ![DC-R4 기본 경로(show ip route 0.0.0.0)](images/Pasted%20image%2020261017235010.png)
 
 DC-R4 advertised-routes
+
 ![DC-R4 advertised-routes](images/Pasted%20image%2020261017235020.png)
 
 DC-R4 route-map
+
 ![DC-R4 route-map](images/Pasted%20image%2020261017235031.png)
 
 DC-R3 prefix-list
+
 ![DC-R3 prefix-list](images/isp-link-dc-r3-prefix-list.png)
 
 DC-R4 prefix-list
+
 ![DC-R4 prefix-list](images/Pasted%20image%2020261017235043.png)
 
 DC-R4 OSPF database external
+
 ![DC-R4 OSPF database external](images/Pasted%20image%2020261017235101.png)

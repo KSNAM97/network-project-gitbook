@@ -11,7 +11,9 @@
 | DC-SW2-L2 | `show spanning-tree mst 1` | 위와 같음 | Bridge 32769, Root `0c06.2ecc.02b8` priority 4097, Et1 root FWD, Et2 alternate discarding, Et12 designated FWD Edge | 통과 |
 
 DC-SW1-L2 MSTP 확인
+
 ![DC-SW1-L2 MSTP 확인](images/Pasted%20image%2020261011232742.png)
 
 DC-SW2-L2 MSTP 확인
+
 ![DC-SW2-L2 MSTP 확인](images/Pasted%20image%2020261011232807.png)

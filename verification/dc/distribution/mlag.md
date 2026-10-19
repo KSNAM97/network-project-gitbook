@@ -24,51 +24,67 @@
 vEOS-lab의 MLAG 지원 여부는 `show mlag`로 먼저 확인하고, 미지원이면 판정란에 한계를 기록.
 
 DC-SW3-L3 show mlag
+
 ![DC-SW3-L3 show mlag](images/mlag-dc-sw3-l3-show-mlag.png)
 
 DC-SW3-L3 show port-channel dense
+
 ![DC-SW3-L3 show port-channel dense](images/mlag-dc-sw3-l3-port-channel.webp)
 
 DC-SW4-L3 show mlag
+
 ![DC-SW4-L3 show mlag](images/mlag-dc-sw4-l3-show-mlag.webp)
 
 DC-SW4-L3 show port-channel dense
+
 ![DC-SW4-L3 show port-channel dense](images/mlag-dc-sw4-l3-port-channel.webp)
 
 DC-SW1-L2 show port-channel dense
+
 ![DC-SW1-L2 show port-channel dense](images/mlag-dc-sw1-l2-port-channel.webp)
 
 DC-SW1-L2 show lacp peer
+
 ![DC-SW1-L2 show lacp peer](images/mlag-dc-sw1-l2-lacp-peer.webp)
 
 DC-SW2-L2 show port-channel dense
+
 ![DC-SW2-L2 show port-channel dense](images/mlag-dc-sw2-l2-port-channel.webp)
 
 DC-SW2-L2 show lacp peer
+
 ![DC-SW2-L2 show lacp peer](images/mlag-dc-sw2-l2-lacp-peer.webp)
 
 DC-DNS-1 ping 10.2.50.1
+
 ![DC-DNS-1 ping 10.2.50.1](images/mlag-dc-dns-1-ping.webp)
 
 DC-DNS-1 nslookup
+
 ![DC-DNS-1 nslookup](images/mlag-dc-dns-1-nslookup.png)
 
 DC-DNS-1 연속 ping(SW3 Et7 다운 중)
+
 ![DC-DNS-1 연속 ping(SW3 Et7 다운 중)](images/mlag-failover-dns-ping.webp)
 
 DC-SW3-L3 show int et7(다운)
+
 ![DC-SW3-L3 show int et7(다운)](images/mlag-failover-sw3-et7-down.webp)
 
 DC-SW3-L3 show int et7(복구)
+
 ![DC-SW3-L3 show int et7(복구)](images/mlag-failover-sw3-et7-up.webp)
 
 DC-SW3-L3 show mlag(복구 후)
+
 ![DC-SW3-L3 show mlag(복구 후)](images/mlag-failover-recovered-show-mlag.png)
 
 DC-SW3-L3 show mlag detail
+
 ![DC-SW3-L3 show mlag detail](images/mlag-dc-sw3-l3-detail.png)
 
 DC-SW4-L3 show mlag detail
+
 ![DC-SW4-L3 show mlag detail](images/mlag-dc-sw4-l3-detail.png)
 
 ## Wireshark 확인(MLAG LACPDU)
@@ -90,15 +106,19 @@ DC-SW4-L3 show mlag detail
 - 장애 시 재분산(멤버 `shutdown`)은 이 캡처에 포함하지 않음.
 
 링크 37 Wireshark(`slow`)
+
 ![링크 37 LACP](images/mlag-wireshark-link37-list.webp)
 
 링크 37 LACPDU 상세(DC-SW3-L3)
+
 ![링크 37 LACPDU](images/mlag-wireshark-link37-lacpdu.webp)
 
 링크 39 Wireshark(`slow`): 30초 간격
+
 ![링크 39 LACP](images/mlag-wireshark-link39-list.webp)
 
 링크 39 LACPDU 상세(DC-SW4-L3, 같은 Actor System ID)
+
 ![링크 39 LACPDU](images/mlag-wireshark-link39-lacpdu.webp)
 
 ## Wireshark 확인(MLAG 피어링, VLAN 4094)
@@ -119,10 +139,13 @@ DC-SW4-L3 show mlag detail
 - `Dup ACK`와 `Keep-Alive`가 보이는 원인은 확인하지 못함.
 
 피어 VLAN 목록
+
 ![MLAG 피어 VLAN 4094](images/mlag-wireshark-peer-vlan4094.webp)
 
 UDP 4432(프레임 74)
+
 ![UDP 4432](images/mlag-wireshark-peer-udp4432.webp)
 
 TCP 4432 데이터(프레임 72)
+
 ![TCP 4432](images/mlag-wireshark-peer-tcp4432.webp)

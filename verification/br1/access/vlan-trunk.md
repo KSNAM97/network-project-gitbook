@@ -12,7 +12,9 @@
 | BR1-SW3-L3 | `show vlan` | VLAN 10 br1-public(1/1/6, BR1-PC1), VLAN 20 br1-private(1/1/7, BR1-PC2) | VLAN 10 br1-public up(1/1/1-1/1/2, 1/1/6), VLAN 20 br1-private up(1/1/1-1/1/2, 1/1/7), VLAN 100 mgmt up(1/1/1-1/1/2), 999 native와 1 DEFAULT_VLAN_1은 down(no_member_port) | 통과 |
 
 BR1-SW3-L3 TRUNK
+
 ![BR1-SW3-L3 TRUNK](images/Pasted%20image%2020261017184531.png)
 
 BR1-SW3-L3 VLAN
+
 ![BR1-SW3-L3 VLAN](images/Pasted%20image%2020261017184540.png)

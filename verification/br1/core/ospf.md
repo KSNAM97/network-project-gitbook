@@ -13,7 +13,9 @@
 프로세스 12, Area 2, Router ID는 장비의 `lo0`.
 
 BR1-R1 OSPF
+
 ![BR1-R1 OSPF](images/Pasted%20image%2020261012203132.png)
 
 BR1-R2 OSPF
+
 ![BR1-R2 OSPF](images/Pasted%20image%2020261012203121.png)

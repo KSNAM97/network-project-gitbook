@@ -14,34 +14,45 @@
 | HQ-R1, HQ-R2 | `show policy-map interface gi2/0`(해당 시) | 정책 미적용(제외 대상) | HQ-R1, HQ-R2 모두 `gi2/0`(HQ-R1↔R2 라우터 간 링크)의 출력이 비어 있어 정책 미적용 | 통과 |
 
 HQ-R1 show policy-map
+
 ![HQ-R1 show policy-map](images/qos-hq-r1-policy-map.png)
 
 HQ-R1 show policy-map interface gi0/0
+
 ![HQ-R1 show policy-map interface gi0/0](images/qos-hq-r1-interface-gi0-0.png)
 
 HQ-R2 show policy-map
+
 ![HQ-R2 show policy-map](images/qos-hq-r2-policy-map.png)
 
 HQ-R2 show policy-map interface gi0/0
+
 ![HQ-R2 show policy-map interface gi0/0](images/qos-hq-r2-interface-gi0-0.png)
 
 HQ-R1 gi0/0 (DNS 질의 후, cm-business 0)
+
 ![HQ-R1 gi0/0 (DNS 질의 후, cm-business 0)](images/qos-hq-r1-gi0-0-dns.webp)
 
 HQ-R1 gi1/0 (cm-business 0)
+
 ![HQ-R1 gi1/0 (cm-business 0)](images/qos-hq-r1-gi1-0-dns.webp)
 
 HQ-R2 gi0/0 (cm-business 0)
+
 ![HQ-R2 gi0/0 (cm-business 0)](images/qos-hq-r2-gi0-0-dns.webp)
 
 HQ-R2 gi1/0 (DNS 질의 후, cm-business 40)
+
 ![HQ-R2 gi1/0 (DNS 질의 후, cm-business 40)](images/qos-hq-r2-gi1-0-dns.webp)
 
 HQ-PC1 nslookup 20회 반복
+
 ![HQ-PC1 nslookup 20회 반복](images/qos-hq-pc1-nslookup.webp)
 
 HQ-R1 show policy-map interface gi2/0 (정책 미적용)
+
 ![HQ-R1 show policy-map interface gi2/0 (정책 미적용)](images/qos-hq-r1-gi2-0-excluded.png)
 
 HQ-R2 show policy-map interface gi2/0 (정책 미적용)
+
 ![HQ-R2 show policy-map interface gi2/0 (정책 미적용)](images/qos-hq-r2-gi2-0-excluded.png)

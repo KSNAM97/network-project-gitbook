@@ -28,71 +28,93 @@
 ## 시험 전(기준값)
 
 HQ-R1 `show ip bgp summary`
+
 ![HQ-R1 `show ip bgp summary`](images/isp1-hq-r1-bgp-before.webp)
 
 HQ-R1 `show ip route 0.0.0.0`
+
 ![HQ-R1 `show ip route 0.0.0.0`](images/isp1-hq-r1-route-before.webp)
 
 DC-R3 `show ip bgp summary`
+
 ![DC-R3 `show ip bgp summary`](images/isp1-dc-r3-bgp-before.webp)
 
 DC-R3 `show ip route 0.0.0.0`
+
 ![DC-R3 `show ip route 0.0.0.0`](images/isp1-dc-r3-route-before.webp)
 
 BR1-R1 `show ip bgp summary`
+
 ![BR1-R1 `show ip bgp summary`](images/isp1-br1-r1-bgp-before.webp)
 
 BR1-R1 `show ip route 0.0.0.0`
+
 ![BR1-R1 `show ip route 0.0.0.0`](images/isp1-br1-r1-route-before.webp)
 
 BR2-R2(ISP-2 연결) `show ip bgp summary`
+
 ![BR2-R2(ISP-2 연결) `show ip bgp summary`](images/isp1-br2-r2-bgp-before.webp)
 
 BR2-R2 `show ip route 0.0.0.0`
+
 ![BR2-R2 `show ip route 0.0.0.0`](images/isp1-br2-r2-route-before.webp)
 
 HQ-R2 `show dmvpn`(BR1-R1 shortcut 포함)
+
 ![HQ-R2 `show dmvpn`(BR1-R1 shortcut 포함)](images/isp1-hq-r2-dmvpn-before.webp)
 
 DC-R2 `show dmvpn`(Hub, Spoke 3대)
+
 ![DC-R2 `show dmvpn`(Hub, Spoke 3대)](images/isp1-dc-r2-dmvpn-before.webp)
 
 `traceroute` HQ-PC1 → BR1-PC1(DMVPN 터널 경유)
+
 ![`traceroute` HQ-PC1 → BR1-PC1(DMVPN 터널 경유)](images/isp1-traceroute-baseline.png)
 
 Wireshark(`bgp`) 시험 전 Keepalive
+
 ![Wireshark(`bgp`) 시험 전 Keepalive](images/isp1-wireshark-baseline.webp)
 
 ## 장애 중
 
 Wireshark: PE-A 마지막 Keepalive 후 HQ-R1 `NOTIFICATION`
+
 ![Wireshark: PE-A 마지막 Keepalive 후 HQ-R1 `NOTIFICATION`](images/isp1-wireshark-notification.webp)
 
 HQ-R1 `show ip bgp summary`(Idle)
+
 ![HQ-R1 `show ip bgp summary`(Idle)](images/isp1-hq-r1-bgp-down.webp)
 
 HQ-R1 `show ip route 0.0.0.0`(OSPF E1 201)
+
 ![HQ-R1 `show ip route 0.0.0.0`(OSPF E1 201)](images/isp1-hq-r1-route-down.webp)
 
 HQ-R2 `show ip route 0.0.0.0`(ISP-2 BGP 경로)
+
 ![HQ-R2 `show ip route 0.0.0.0`(ISP-2 BGP 경로)](images/isp1-hq-r2-route-down.webp)
 
 DC-R3 `show ip bgp summary`(Active)
+
 ![DC-R3 `show ip bgp summary`(Active)](images/isp1-dc-r3-bgp-down.webp)
 
 HQ-R2 `show dmvpn`(Hub UP)
+
 ![HQ-R2 `show dmvpn`(Hub UP)](images/isp1-hq-r2-dmvpn-down.webp)
 
 HQ-PC1 → BR1-PC1 `ping`(장애 중)
+
 ![HQ-PC1 → BR1-PC1 `ping`(장애 중)](images/isp1-ping-stats-2.png)
 
 HQ-PC1 → BR1-PC1 `ping` 통계
+
 ![HQ-PC1 → BR1-PC1 `ping` 통계](images/isp1-ping-stats-1.png)
 
 ## 복구
 
 Wireshark: `no shutdown` 후 `OPEN`, `UPDATE`
+
 ![Wireshark: `no shutdown` 후 `OPEN`, `UPDATE`](images/isp1-wireshark-recovery.webp)
 
 복구 후 HQ-R1 `show ip route 0.0.0.0`(BGP 경로 복귀)
+
 ![복구 후 HQ-R1 기본 경로](images/isp1-hq-r1-route-after.webp)

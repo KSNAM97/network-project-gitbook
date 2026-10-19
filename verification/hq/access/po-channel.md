@@ -10,5 +10,6 @@
 | HQ-SW-1 | `show etherchannel summary` | Po1(Gi1/0, Gi1/1), Po2(Gi1/2, Gi1/3) LACP, 멤버 `(P)` | Po1(SU) Gi1/0(P) Gi1/1(P), Po2(SU) Gi1/2(P) Gi1/3(P) | 통과 |
 
 HQ-SW-1 EtherChannel
+
 ![HQ-SW-1 EtherChannel](images/Pasted%20image%2020261011234834.png)
 

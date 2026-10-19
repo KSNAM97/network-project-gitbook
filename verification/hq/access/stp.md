@@ -10,5 +10,6 @@
 | HQ-SW-1 | `show spanning-tree mst 1` | 기본 priority(32768), 루트는 HQ-SW-2 | Bridge 32769, Root `0c65.58a4` priority 4097(HQ-SW-2), Po1 Root FWD, Po2 Altn BLK, Gi3/0 Gi3/1 Desg FWD Edge | 통과 |
 
 HQ-SW-1 MSTP
+
 ![HQ-SW-1 MSTP](images/Pasted%20image%2020261011235142.png)
 

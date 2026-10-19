@@ -13,15 +13,19 @@
 | DC-SW4-L3 | `show running-config section ^vlan` | VLAN 50 server, 100 mgmt, 999 native 정의 | vlan 50 name server, vlan 100 name mgmt, vlan 999 name native 일치 | 통과 |
 
 DC-SW3-L3
+
 ![DC-SW3-L3](images/Pasted%20image%2020261011234312.png)
 
 DC-SW4-L3
+
 ![DC-SW4-L3](images/Pasted%20image%2020261011234333.png)
 
 DC-SW3-L3 VLAN
+
 ![DC-SW3-L3 VLAN](images/dc-sw3-l3-vlan.png)
 
 DC-SW4-L3 VLAN
+
 ![DC-SW4-L3 VLAN](images/dc-sw4-l3-vlan.png)
 
 ## Wireshark 확인(802.1Q 태그)

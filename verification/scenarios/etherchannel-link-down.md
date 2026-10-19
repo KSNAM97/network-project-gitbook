@@ -30,21 +30,27 @@
 | 4 | `Gi1/0` `no shutdown` 후 `Po1` 복귀 | `show etherchannel summary`에서 `Po1(SU)`에 `Gi1/0(P)`, `Gi1/1(P)`로 두 멤버 복귀, `Po2(SU)`도 `Gi1/2(P)`, `Gi1/3(P)` 유지 | 통과 |
 
 HQ-SW-1 Gi1/0 ↔ HQ-SW-2 Gi0/0 LACP(시험 전)
+
 ![HQ-SW-1 Gi1/0 to HQ-SW-2 Gi0/0 LACP(시험 전)](images/etherchannel-hq-po1-lacp-baseline.webp)
 
 HQ-SW-1 Gi1/0 shutdown 로그
+
 ![HQ-SW-1 Gi1/0 shutdown 로그](images/etherchannel-hq-po1-shutdown-log.webp)
 
 HQ-PC1 연속 ping(seq 47~81)
+
 ![HQ-PC1 연속 ping](images/etherchannel-hq-po1-ping.png)
 
 HQ-PC1 ping 통계(94 전송, 93 응답)
+
 ![HQ-PC1 ping 통계](images/etherchannel-hq-po1-ping-summary.png)
 
 HQ-SW-1 show etherchannel summary(Gi1/0 다운)
+
 ![HQ-SW-1 show etherchannel summary](images/etherchannel-hq-po1-summary-down.webp)
 
 HQ-SW-1 show etherchannel summary(복구 후)
+
 ![HQ-SW-1 show etherchannel summary(복구 후)](images/etherchannel-hq-po1-summary-restored.webp)
 
 ### BR1 LAG 1(BR1-SW1-L3 ↔ BR1-SW2-L3, Aruba, 멤버 1/1/3, 1/1/4)
@@ -58,16 +64,21 @@ HQ-SW-1 show etherchannel summary(복구 후)
 - Cisco(HQ Po1, 손실 1개, 약 1초)와 비교해 Aruba(가상 AOS-CX)는 손실 5개와 최대 지연 5초로 전환이 더 오래 걸림. 원인은 이 시험만으로 확정하지 못함(가상 이미지의 전환 처리, 호스트 부하 등).
 
 BR1-SW1-L3 show lacp aggregates
+
 ![BR1-SW1-L3 show lacp aggregates](images/etherchannel-br1-lag1-aggregates.png)
 
 BR1-SW1-L3 show lacp interfaces(시험 전)
+
 ![BR1-SW1-L3 show lacp interfaces(시험 전)](images/etherchannel-br1-lag1-interfaces-baseline.webp)
 
 BR1-SW1-L3 show lacp interfaces(1/1/3 다운)
+
 ![BR1-SW1-L3 show lacp interfaces(1/1/3 다운)](images/etherchannel-br1-lag1-interfaces-down.webp)
 
 BR1-PC1 ping 통계(49 전송, 44 응답)
+
 ![BR1-PC1 ping 통계](images/etherchannel-br1-lag1-ping-summary.png)
 
 BR1-SW1-L3 show lacp interfaces(복구 후)
+
 ![BR1-SW1-L3 show lacp interfaces(복구 후)](images/etherchannel-br1-lag1-interfaces-restored.webp)

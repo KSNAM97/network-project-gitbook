@@ -15,15 +15,19 @@
 서버 콘솔 출력(텍스트)으로 확인. 서버 자체 조회까지이며 사이트 간 조회(HQ, BR 호스트)는 DMVPN 이후.
 
 DC-DNS-1 구동확인
+
 ![DNS](images/Pasted%20image%2020261013205309.png)
 
 DC-DNS-2 구동확인
+
 ![DNS](images/Pasted%20image%2020261013205338.png)
 
 DC-DNS-1 DOWN시 DC-DNS-2 정상동작 확인
+
 ![DNS](images/Pasted%20image%2020261013205826.png)
 
 DC-DNS-1 LOG
+
 ![DC-DNS-1 LOG](images/Pasted%20image%2020261013210246.png)
 
 ## Wireshark 확인(DNS 질의와 응답)
@@ -47,7 +51,9 @@ DC-DNS-1 LOG
 - 질의 출발지가 DHCP로 받은 주소(`10.3.10.217`)라 DHCP(주소와 DNS 서버 알림) → DNS(이름 응답)의 흐름이 이어짐. 주소를 할당하는 것은 DHCP 서버이고 DNS 서버는 질의에 응답만 함.
 
 BR1-PC1 `nslookup`
+
 ![nslookup](images/dns-nslookup-br1-pc1.webp)
 
 링크 41 Wireshark(`dns`)
+
 ![DNS 질의와 응답](images/dns-wireshark-link41.webp)

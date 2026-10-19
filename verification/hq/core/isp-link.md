@@ -16,37 +16,49 @@
 장애 시 BGP 세션이 내려가 기본 경로가 철회되고 OSPF 기본 경로 광고가 ISP-2로 전환되는지는 [scenarios/](../../scenarios/)에서 확인.
 
 HQ-R1 BGP summary
+
 ![HQ-R1 BGP summary](images/Pasted%20image%2020261017232622.png)
 
 HQ-R1 기본 경로(show ip route 0.0.0.0)
+
 ![HQ-R1 기본 경로(show ip route 0.0.0.0)](images/Pasted%20image%2020261017232640.png)
 
 HQ-R1 advertised-routes
+
 ![HQ-R1 advertised-routes](images/Pasted%20image%2020261017232820.png)
 
 HQ-R1 route-map
+
 ![HQ-R1 route-map](images/Pasted%20image%2020261017232904.png)
 
 HQ-R1 prefix-list
+
 ![HQ-R1 prefix-list](images/Pasted%20image%2020261017232912.png)
 
 HQ-R1 OSPF database external
+
 ![HQ-R1 OSPF database external](images/Pasted%20image%2020261017232944.png)
 
 HQ-R2 BGP summary
+
 ![HQ-R2 BGP summary](images/Pasted%20image%2020261017233004.png)
 
 HQ-R2 기본 경로(show ip route 0.0.0.0)
+
 ![HQ-R2 기본 경로(show ip route 0.0.0.0)](images/Pasted%20image%2020261017233011.png)
 
 HQ-R2 advertised-routes
+
 ![HQ-R2 advertised-routes](images/Pasted%20image%2020261017233045.png)
 
 HQ-R2 route-map
+
 ![HQ-R2 route-map](images/Pasted%20image%2020261017233114.png)
 
 HQ-R2 prefix-list
+
 ![HQ-R2 prefix-list](images/Pasted%20image%2020261017233121.png)
 
 HQ-R2 OSPF database external
+
 ![HQ-R2 OSPF database external](images/Pasted%20image%2020261017233141.png)

@@ -16,21 +16,27 @@
 | BR1-PC2 | `udhcpc -i eth0`, `ip addr`, `cat /etc/resolv.conf` | 풀 범위 주소와 `resolv.conf` DNS 두 대 | 10.3.20.117/24(서버 10.3.20.2, lease time 86400), resolv.conf search lab.local, nameserver 10.2.50.10과 10.2.50.11 | 통과 |
 
 BR1-SW1-L3 DHCP POOL
+
 ![BR1-SW1-L3 DHCP POOL](images/Pasted%20image%2020261017184726.png)
 
 BR1-SW1-L3 DHCP LEASE
+
 ![BR1-SW1-L3 DHCP LEASE](images/Pasted%20image%2020261017184828.png)
 
 BR1-SW2-L3 DHCP POOL
+
 ![BR1-SW2-L3 DHCP POOL](images/Pasted%20image%2020261017184913.png)
 
 BR1-SW2-L3 DHCP LEASE
+
 ![BR1-SW2-L3 DHCP LEASE](images/Pasted%20image%2020261017184938.png)
 
 BR1-PC1
+
 ![BR1-PC1](images/Pasted%20image%2020261017185105.png)
 
 BR1-PC2
+
 ![BR1-PC2](images/Pasted%20image%2020261017185144.png)
 
 ## Wireshark DORA 확인
@@ -53,9 +59,11 @@ BR1-PC2
 - BR1 풀 범위 `.153`은 SW-1 풀(`.100~163`), `.217`은 SW-2 풀(`.164~227`)에 속해 어느 서버의 Offer인지 주소로 구분됨.
 
 BR1-PC1 Wireshark(`dhcp`): Discover, Offer(3개), Request, ACK
+
 ![BR1-PC1 DHCP DORA](images/dhcp-wireshark-dora.webp)
 
 BR1-PC1 `udhcpc -i eth0`
+
 ![BR1-PC1 udhcpc](images/dhcp-udhcpc-br1-pc1.webp)
 
 ### Offer 패킷 상세(출발지별 비교)
@@ -70,13 +78,17 @@ BR1-PC1 `udhcpc -i eth0`
 - VRRP Master(SW-1)가 VIP 주소로도 서버 역할을 해서, 장애 전환 후에는 SW-2가 VIP로 응답하게 되고 Server Identifier `10.3.10.1`은 유지될 것으로 예상되나 실측하지 않음.
 
 Offer 프레임 611(`10.3.10.2`)
+
 ![Offer SW-1](images/dhcp-offer-sw1-detail.webp)
 
 Offer 프레임 613(VIP `10.3.10.1`, VRRP 가상 MAC)
+
 ![Offer VIP](images/dhcp-offer-vip-detail.webp)
 
 Offer 프레임 619(`10.3.10.3`)
+
 ![Offer SW-2](images/dhcp-offer-sw2-detail.webp)
 
 Offer 옵션 3, 15, 6 펼친 화면(프레임 611)
+
 ![BR1 Offer 옵션](images/dhcp-offer-options.webp)

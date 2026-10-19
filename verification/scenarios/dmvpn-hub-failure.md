@@ -36,53 +36,69 @@ Hub가 하나뿐인 구조의 한계를 확인하는 시나리오.
 ## Hub 장애 중
 
 DC-R2 `show ip interface tunnel 0`(administratively down)
+
 ![DC-R2 `show ip interface tunnel 0`(administratively down)](images/dmvpn-hub-tunnel0-down.webp)
 
 DC-R2 `show dmvpn`(목록 비어 있음)
+
 ![DC-R2 `show dmvpn`(목록 비어 있음)](images/dmvpn-hub-dc-r2-dmvpn-down.webp)
 
 DC-R2 `show ip ospf neighbor`(Tunnel0 이웃 소실)
+
 ![DC-R2 `show ip ospf neighbor`(Tunnel0 이웃 소실)](images/dmvpn-hub-dc-r2-ospf-down.webp)
 
 HQ-R2 `show ip ospf neighbor`(Hub 이웃 소실)
+
 ![HQ-R2 `show ip ospf neighbor`(Hub 이웃 소실)](images/dmvpn-hub-hq-r2-ospf-down.webp)
 
 HQ-R2 `show ip route 10.3.10.0`
+
 ![HQ-R2 `show ip route 10.3.10.0`](images/dmvpn-hub-hq-r2-route-down.png)
 
 HQ-PC1 `traceroute` 10.3.10.217(ISP 경유)
+
 ![HQ-PC1 `traceroute` 10.3.10.217(ISP 경유)](images/dmvpn-hub-traceroute-down.webp)
 
 Wireshark: Hub ESP(`ip.src == 203.0.113.5`)
+
 ![Wireshark: Hub ESP(`ip.src == 203.0.113.5`)](images/dmvpn-hub-wireshark-hub-esp.webp)
 
 Wireshark: shortcut ESP(`.9` ↔ `.13`) 유지 구간
+
 ![Wireshark: shortcut ESP(`.9` ↔ `.13`) 유지 구간](images/dmvpn-hub-wireshark-shortcut-esp-1.webp)
 
 Wireshark: shortcut ESP 중단 이후
+
 ![Wireshark: shortcut ESP 중단 이후](images/dmvpn-hub-wireshark-shortcut-esp-2.webp)
 
 HQ-PC1 `ping` 통계(0% 손실)
+
 ![HQ-PC1 `ping` 통계(0% 손실)](images/dmvpn-hub-ping-stats.webp)
 
 ## 복구
 
 DC-R2 `show ip interface tunnel 0`(up)
+
 ![DC-R2 `show ip interface tunnel 0`(up)](images/dmvpn-hub-tunnel0-up.webp)
 
 Wireshark(`isakmp`): 재시도와 복구(Main Mode, Quick Mode)
+
 ![Wireshark(`isakmp`): 재시도와 복구(Main Mode, Quick Mode)](images/dmvpn-hub-wireshark-isakmp.webp)
 
 DC-R2 `show dmvpn`(Spoke 3대 UP)
+
 ![DC-R2 `show dmvpn`(Spoke 3대 UP)](images/dmvpn-hub-dc-r2-dmvpn-after.webp)
 
 DC-R2 `show ip ospf neighbor`(Tunnel0 FULL)
+
 ![DC-R2 `show ip ospf neighbor`(Tunnel0 FULL)](images/dmvpn-hub-dc-r2-ospf-after.webp)
 
 HQ-R2 `show ip ospf neighbor`(Hub FULL/DR)
+
 ![HQ-R2 `show ip ospf neighbor`(Hub FULL/DR)](images/dmvpn-hub-hq-r2-ospf-after.webp)
 
 HQ-PC1 `traceroute`(터널 경유 복귀)
+
 ![HQ-PC1 `traceroute`(터널 경유 복귀)](images/dmvpn-hub-traceroute-after.webp)
 
 
@@ -105,26 +121,34 @@ Hub 이중화를 추가한 뒤의 시험. 설정은 [dmvpn-design.md](../../docs
 - DC-R1이 먼저 올라와 DR이 되었고 DC-R2는 BDR(`FULL/BDR`). 평상시 경로는 비용으로 결정되어 DR 역할과는 무관.
 
 HQ-PC1 `traceroute 10.10.10.13`(평상시, 3홉 `172.16.0.1`)
+
 ![평상시 traceroute](images/dmvpn-backup-normal-traceroute.webp)
 
 HQ-R2 `show ip route 10.10.10.13`(평상시)
+
 ![HQ-R2 route](images/dmvpn-backup-normal-hq-r2-route.webp)
 
 HQ-R2 `show dmvpn`(NHS 2개 UP)
+
 ![HQ-R2 dmvpn](images/dmvpn-backup-normal-hq-r2-dmvpn.webp)
 
 DC-R2 `show clock`(장애 시작 직전)
+
 ![clock](images/dmvpn-backup-clock.webp)
 
 HQ-PC1 `ping 10.10.10.13` 통계(장애 중, 13% 손실)
+
 ![ping 통계](images/dmvpn-backup-ping-stats.webp)
 
 HQ-PC1 `traceroute 10.10.10.13`(장애 후, 3홉 `172.16.0.2`)
+
 ![장애 후 traceroute](images/dmvpn-backup-traceroute-fail.webp)
 
 DC-R2 로그(Tunnel0 up과 OSPF 이웃 FULL 복귀)
+
 ![DC-R2 로그](images/dmvpn-backup-dc-r2-ospf-log-recovery.webp)
 
 HQ-PC1 `traceroute 10.10.10.13`(복구 후, 3홉 `172.16.0.1`)
+
 ![복구 후 traceroute](images/dmvpn-backup-traceroute-after.webp)
 

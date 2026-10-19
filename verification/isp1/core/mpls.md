@@ -15,39 +15,51 @@
 | ISP-1-PE-A, PE-B, P1, P2 | `show mpls forwarding-table` | 상대 장비 Loopback0 `/32` 3개에 레이블 | 각 장비가 Loopback0 `/32` 3개에 레이블 보유(장비별 구간 값). PE-A 11003(.2), 11004(.3), 11005(.4), P1 12002(.1), 12003(.3), 12004(.4), P2 13002(.1), 13003(.2), 13004(.4), PE-B 14009(.1), 14010(.2), 14011(.3). 이웃으로 가는 경로는 Pop Label(PHP), PE-A와 PE-B 사이는 P1, P2 경유 이중 경로(예: 11005에서 12004, 13004) | 통과 |
 
 ISP-1-PE-A LDP neighbor
+
 ![ISP-1-PE-A LDP neighbor](images/Pasted%20image%2020261017211443.png)
 
 ISP-1-PE-B LDP neighbor
+
 ![ISP-1-PE-B LDP neighbor](images/Pasted%20image%2020261017211500.png)
 
 ISP-1-P1 LDP neighbor
+
 ![ISP-1-P1 LDP neighbor](images/Pasted%20image%2020261017211358.png)
 
 ISP-1-P2 LDP neighbor
+
 ![ISP-1-P2 LDP neighbor](images/Pasted%20image%2020261017211424.png)
 
 ISP-1-P1 MPLS interface
+
 ![ISP-1-P1 MPLS interface](images/Pasted%20image%2020261017211538.png)
 
 ISP-1-PE-A MPLS interface
+
 ![ISP-1-PE-A MPLS interface](images/Pasted%20image%2020261017211549.png)
 
 ISP-1-PE-B MPLS interface
+
 ![ISP-1-PE-B MPLS interface](images/Pasted%20image%2020261017211559.png)
 
 ISP-1-P2 MPLS interface
+
 ![ISP-1-P2 MPLS interface](images/Pasted%20image%2020261017211608.png)
 
 ISP-1-P1 MPLS forwarding-table
+
 ![ISP-1-P1 MPLS forwarding-table](images/Pasted%20image%2020261017211632.png)
 
 ISP-1-PE-A MPLS forwarding-table
+
 ![ISP-1-PE-A MPLS forwarding-table](images/Pasted%20image%2020261017211641.png)
 
 ISP-1-PE-B MPLS forwarding-table
+
 ![ISP-1-PE-B MPLS forwarding-table](images/Pasted%20image%2020261017211649.png)
 
 ISP-1-P2 MPLS forwarding-table
+
 ![ISP-1-P2 MPLS forwarding-table](images/Pasted%20image%2020261017211659.png)
 
 ## 2. VRF와 vpnv4 (KAN-35)
@@ -60,21 +72,27 @@ ISP-1-P2 MPLS forwarding-table
 | ISP-1-PE-A, PE-B | `show ip bgp vpnv4 all summary` | P1, P2와 vpnv4 Established(2세션) | PE-A(router-id 100.100.100.1)와 PE-B(100.100.100.4) 모두 P1(100.100.100.2), P2(100.100.100.3) 2개 vpnv4 이웃 Established(State/PfxRcd 0, 사이트 경로는 KAN-18 이후) | 통과 |
 
 ISP-1-PE-A VRF
+
 ![ISP-1-PE-A VRF](images/Pasted%20image%2020261017213929.png)
 
 ISP-1-PE-B VRF
+
 ![ISP-1-PE-B VRF](images/Pasted%20image%2020261017213922.png)
 
 ISP-1-P1 VPNv4 summary
+
 ![ISP-1-P1 VPNv4 summary](images/Pasted%20image%2020261017214815.png)
 
 ISP-1-P2 VPNv4 summary
+
 ![ISP-1-P2 VPNv4 summary](images/Pasted%20image%2020261017214828.png)
 
 ISP-1-PE-A VPNv4 summary
+
 ![ISP-1-PE-A VPNv4 summary](images/Pasted%20image%2020261017214846.png)
 
 ISP-1-PE-B VPNv4 summary
+
 ![ISP-1-PE-B VPNv4 summary](images/Pasted%20image%2020261017214857.png)
 
 ## 3. 사이트 경로와 레이블 경로 (사이트 eBGP 이후)
@@ -85,15 +103,19 @@ ISP-1-PE-B VPNv4 summary
 | ISP-1-PE-B | `show ip cef vrf corp 10.1.0.0`, `traceroute mpls ipv4 100.100.100.1 255.255.255.255` | 사이트 경로가 LDP 레이블과 VPN 레이블 2개로 전달되고, 코어 LSP가 PE-A까지 이어짐(일반 `traceroute vrf corp`는 코어 홉 응답이 돌아오지 않아 `* * *`로 표시되며, 출발 주소가 VRF 밖이라 응답 경로가 없는 것으로 추정) | `show ip cef vrf corp 10.1.0.0`: next-hop `100.1.0.9 Gi0/0 label 12001 11006`(P1 경유)와 `100.1.0.13 Gi1/0 label 13002 11006`(P2 경유). 바깥 LDP 레이블(12001, 13002)과 안쪽 VPN 레이블 11006(PE-A가 광고한 값)의 2단 스택. `traceroute mpls ipv4 100.100.100.1/32`: `0 100.1.0.10 [Labels: 12001]` → `L 1 100.1.0.9 [Labels: implicit-null] 40ms` → `! 2 100.1.0.1 52ms`로 PE-B에서 P를 거쳐 PE-A까지 LSP 성공(P에서 PHP) | 통과 |
 
 ISP-1-PE-A show ip route vrf corp
+
 ![ISP-1-PE-A show ip route vrf corp](images/mpls-vrf-route-pe-a.webp)
 
 ISP-1-PE-B show ip route vrf corp
+
 ![ISP-1-PE-B show ip route vrf corp](images/mpls-vrf-route-pe-b.webp)
 
 ISP-1-PE-B show ip cef vrf corp 10.1.0.0
+
 ![ISP-1-PE-B show ip cef vrf corp 10.1.0.0](images/mpls-label-stack-cef.png)
 
 ISP-1-PE-B traceroute mpls ipv4 100.100.100.1
+
 ![ISP-1-PE-B traceroute mpls ipv4 100.100.100.1](images/mpls-label-stack-lsp-traceroute.webp)
 
 ## Wireshark 확인(LDP 세션 수립)
@@ -114,6 +136,7 @@ ISP-1-PE-B traceroute mpls ipv4 100.100.100.1
 - 이웃 상태는 `show mpls ldp neighbor`(1절)와 같음. 매핑된 레이블 값(예: PE-B Loopback `12004`)은 이 화면에서 펼치지 않았음.
 
 Wireshark(`ldp`): Hello, Initialization, Label Mapping
+
 ![LDP 세션 수립](images/mpls-wireshark-ldp-session.webp)
 
 ### LDP Label Mapping 패킷 바이트 해석(프레임 83, P1 → PE-A)
@@ -130,6 +153,7 @@ Address Message와 Label Mapping Message 여러 개가 한 TCP 세그먼트에 �
 - 레이블 값은 바이트(`2e e4` = 12004)에서 읽은 값.
 
 Wireshark 패킷 바이트(프레임 83): LDP Address, Label Mapping
+
 ![LDP Label Mapping 패킷 바이트](images/mpls-wireshark-ldp-mapping-bytes.webp)
 
 ### LDP 메시지 펼침(프레임 30, 122, 316)
@@ -145,17 +169,22 @@ Wireshark 패킷 바이트(프레임 83): LDP Address, Label Mapping
 - 12004는 앞 절의 패킷 바이트 해석(`100.100.100.4/32` → 12004)과 같은 값. 이 화면에서는 `FEC Element 1`을 펼치지 않아 prefix는 보이지 않고, 바이트(`2e e4`)로 일치를 확인.
 
 Wireshark(프레임 30): LDP Hello
+
 ![LDP Hello](images/mpls-wireshark-ldp-hello.webp)
 
 Wireshark(프레임 122): LDP Keep Alive
+
 ![LDP Keep Alive](images/mpls-wireshark-ldp-keepalive.webp)
 
 Wireshark(프레임 316): Address Message 펼침
+
 ![LDP Address Message](images/mpls-wireshark-ldp-address.webp)
 
 Wireshark(프레임 316): Label Mapping Message 9개
+
 ![LDP Label Mapping 목록](images/mpls-wireshark-ldp-mapping-list.webp)
 
 Wireshark(프레임 316): 아홉 번째 Label Mapping, Generic Label 12004
+
 ![LDP Label Mapping 12004](images/mpls-wireshark-ldp-mapping-expanded.webp)
 

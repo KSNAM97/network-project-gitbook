@@ -17,7 +17,9 @@
 프로세스 12, Area 0.0.0.2(Area 2).
 
 BR1-SW1-L3 OSPF
+
 ![BR1-SW1-L3 OSPF](images/Pasted%20image%2020261017185252.png)
 
 BR1-SW2-L3 OSPF
+
 ![BR1-SW2-L3 OSPF](images/Pasted%20image%2020261017185313.png)

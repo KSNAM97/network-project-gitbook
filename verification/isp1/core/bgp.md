@@ -16,45 +16,59 @@
 | ISP-1 전체 | `show ip bgp neighbors \| include hold` | iBGP 세션 timers 3/9 | P1, P2는 이웃 3개, PE-A, PE-B는 이웃 2개 모두 `Configured hold time is 9, keepalive interval is 3 seconds` | 통과 |
 
 ISP-1-P1 OSPF neighbor
+
 ![ISP-1-P1 OSPF neighbor](images/Pasted%20image%2020261017203736.png)
 
 ISP-1-PE-A OSPF neighbor
+
 ![ISP-1-PE-A OSPF neighbor](images/Pasted%20image%2020261017203749.png)
 
 ISP-1-PE-B OSPF neighbor
+
 ![ISP-1-PE-B OSPF neighbor](images/Pasted%20image%2020261017203800.png)
 
 ISP-1-P2 OSPF neighbor
+
 ![ISP-1-P2 OSPF neighbor](images/Pasted%20image%2020261017203816.png)
 
 ISP-1-P1 BGP summary
+
 ![ISP-1-P1 BGP summary](images/Pasted%20image%2020261017203848.png)
 
 ISP-1-P2 BGP summary
+
 ![ISP-1-P2 BGP summary](images/Pasted%20image%2020261017203925.png)
 
 ISP-1-PE-A BGP summary
+
 ![ISP-1-PE-A BGP summary](images/Pasted%20image%2020261017203904.png)
 
 ISP-1-PE-B BGP summary
+
 ![ISP-1-PE-B BGP summary](images/Pasted%20image%2020261017203915.png)
 
 ISP-1-P1 BGP neighbors Reflector
+
 ![ISP-1-P1 BGP neighbors Reflector](images/Pasted%20image%2020261017204145.png)
 
 ISP-1-P2 BGP neighbors Reflector
+
 ![ISP-1-P2 BGP neighbors Reflector](images/Pasted%20image%2020261017204158.png)
 
 ISP-1-P1 BGP neighbors hold
+
 ![ISP-1-P1 BGP neighbors hold](images/Pasted%20image%2020261017204230.png)
 
 ISP-1-PE-A BGP neighbors hold
+
 ![ISP-1-PE-A BGP neighbors hold](images/Pasted%20image%2020261017204239.png)
 
 ISP-1-PE-B BGP neighbors hold
+
 ![ISP-1-PE-B BGP neighbors hold](images/Pasted%20image%2020261017204247.png)
 
 ISP-1-P2 BGP neighbors hold
+
 ![ISP-1-P2 BGP neighbors hold](images/Pasted%20image%2020261017204259.png)
 
 ## 2. 사이트 eBGP 세션 (KAN-18, 2주 월)
@@ -70,45 +84,59 @@ ISP-1-P2 BGP neighbors hold
 | ISP-1-PE-A, PE-B | `show ip bgp vpnv4 vrf corp neighbors <사이트 주소> \| include hold`   | eBGP 세션 timers 3/9                                       | PE-A는 HQ-R1, DC-R3 이웃 모두 hold time 9, keepalive 3초(Configured도 동일). PE-B는 BR1-R1, BR2-R1 이웃 모두 hold time 9, keepalive 3초(Configured도 동일) | 통과 |
 
 ISP-1-PE-A VRF summary
+
 ![ISP-1-PE-A VRF summary](images/site-ebgp-pe-a-summary.webp)
 
 ISP-1-PE-A HQ-R1 routes
+
 ![ISP-1-PE-A HQ-R1 routes](images/site-ebgp-pe-a-hq-routes.webp)
 
 ISP-1-PE-A HQ-R1 advertised-routes
+
 ![ISP-1-PE-A HQ-R1 advertised-routes](images/site-ebgp-pe-a-hq-advertised.webp)
 
 ISP-1-PE-A HQ-R1 hold
+
 ![ISP-1-PE-A HQ-R1 hold](images/site-ebgp-pe-a-hq-hold.webp)
 
 ISP-1-PE-A DC-R3 routes
+
 ![ISP-1-PE-A DC-R3 routes](images/site-ebgp-pe-a-dc-routes.webp)
 
 ISP-1-PE-A DC-R3 advertised-routes
+
 ![ISP-1-PE-A DC-R3 advertised-routes](images/site-ebgp-pe-a-dc-advertised.webp)
 
 ISP-1-PE-A DC-R3 hold
+
 ![ISP-1-PE-A DC-R3 hold](images/site-ebgp-pe-a-dc-hold.webp)
 
 ISP-1-PE-B VRF summary
+
 ![ISP-1-PE-B VRF summary](images/site-ebgp-pe-b-summary.webp)
 
 ISP-1-PE-B BR1-R1 routes
+
 ![ISP-1-PE-B BR1-R1 routes](images/site-ebgp-pe-b-br1-routes.webp)
 
 ISP-1-PE-B BR1-R1 advertised-routes
+
 ![ISP-1-PE-B BR1-R1 advertised-routes](images/site-ebgp-pe-b-br1-advertised.webp)
 
 ISP-1-PE-B BR1-R1 hold
+
 ![ISP-1-PE-B BR1-R1 hold](images/site-ebgp-pe-b-br1-hold.webp)
 
 ISP-1-PE-B BR2-R1 routes
+
 ![ISP-1-PE-B BR2-R1 routes](images/site-ebgp-pe-b-br2-routes.webp)
 
 ISP-1-PE-B BR2-R1 advertised-routes
+
 ![ISP-1-PE-B BR2-R1 advertised-routes](images/site-ebgp-pe-b-br2-advertised.webp)
 
 ISP-1-PE-B BR2-R1 hold
+
 ![ISP-1-PE-B BR2-R1 hold](images/site-ebgp-pe-b-br2-hold.webp)
 
 ## 3. PE 정책과 사이트 간 경로 (KAN-17, 3주 목)
@@ -119,27 +147,35 @@ ISP-1-PE-B BR2-R1 hold
 | ISP-1-P1, P2 | `show ip bgp vpnv4 all` | 모든 사이트 /16 반사, `Originator`, `Cluster list` 표시 | P1(100.100.100.2)과 P2(100.100.100.3) 모두 `10.1.0.0/16`, `10.2.0.0/16`(Next Hop 100.100.100.1), `10.3.0.0/16`, `10.4.0.0/16`(Next Hop 100.100.100.4)을 모두 `*>i`로 보유, RD 65100:1. 상세(`show ip bgp vpnv4 all 10.1.0.0`)에서 P1, P2 모두 `Received from a RR-client`, Next Hop 100.100.100.1(metric 2), RT 65100:1, 레이블 in/out nolabel/11006. PE-B는 P1(100.100.100.2), P2(100.100.100.3) 양쪽에서 2경로를 수신(`best #2`), 두 경로 모두 `Originator: 100.100.100.1`, `Cluster list: 1.1.1.1`. PE-A는 eBGP 경로(`external`, table corp, 레이블 in/out 11006/nolabel) | 통과 |
 
 ISP-1-P1 vpnv4 all
+
 ![ISP-1-P1 vpnv4 all](images/pe-policy-p1.png)
 
 ISP-1-P2 vpnv4 all
+
 ![ISP-1-P2 vpnv4 all](images/pe-policy-p2.png)
 
 ISP-1-PE-A vpnv4 all
+
 ![ISP-1-PE-A vpnv4 all](images/pe-policy-pe-a.png)
 
 ISP-1-PE-B vpnv4 all
+
 ![ISP-1-PE-B vpnv4 all](images/pe-policy-pe-b.png)
 
 ISP-1-P1 vpnv4 all 10.1.0.0 상세
+
 ![ISP-1-P1 vpnv4 all 10.1.0.0 상세](images/pe-policy-detail-p1.png)
 
 ISP-1-P2 vpnv4 all 10.1.0.0 상세
+
 ![ISP-1-P2 vpnv4 all 10.1.0.0 상세](images/pe-policy-detail-p2.png)
 
 ISP-1-PE-A vpnv4 all 10.1.0.0 상세
+
 ![ISP-1-PE-A vpnv4 all 10.1.0.0 상세](images/pe-policy-detail-pe-a.webp)
 
 ISP-1-PE-B vpnv4 all 10.1.0.0 상세
+
 ![ISP-1-PE-B vpnv4 all 10.1.0.0 상세](images/pe-policy-detail-pe-b.webp)
 
 ## Wireshark 확인(사이트 eBGP 세션 수립)
@@ -162,6 +198,7 @@ ISP-1-PE-B vpnv4 all 10.1.0.0 상세
 - 펼친 화면은 아래 "OPEN, UPDATE 상세" 참조. 광고 UPDATE의 펼친 화면은 아래 "광고 UPDATE 상세" 참조. OPEN 이전 `NOTIFICATION`도 이 화면에는 없음.
 
 Wireshark(`bgp`): KEEPALIVE 3초 간격, OPEN, UPDATE
+
 ![사이트 eBGP 세션 수립](images/bgp-wireshark-ebgp-session.webp)
 
 ## Wireshark 확인(iBGP vpnv4, ISP-1-PE-A ↔ P1)
@@ -180,9 +217,11 @@ Wireshark(`bgp`): KEEPALIVE 3초 간격, OPEN, UPDATE
 - NLRI의 prefix 자체(`10.1.0.0/16`)는 패킷을 펼친 화면이 아니라 바이트로만 확인하여 펼친 화면이 있으면 보강.
 
 Wireshark(`bgp.type == 1`): iBGP OPEN
+
 ![iBGP OPEN](images/bgp-wireshark-ibgp-open.webp)
 
 Wireshark(`bgp.type == 2`): vpnv4 UPDATE
+
 ![iBGP vpnv4 UPDATE](images/bgp-wireshark-ibgp-vpnv4-update.webp)
 
 ### iBGP UPDATE 패킷 바이트 해석(프레임 257, PE-A → P1)
@@ -198,6 +237,7 @@ Wireshark(`bgp.type == 2`): vpnv4 UPDATE
 - Wireshark 상세 트리를 펼친 화면이 아니라 바이트에서 읽은 값. 레이블 값은 20비트 레이블 필드 `0x02aff1`을 4비트 오른쪽으로 이동해 계산(= 11007).
 
 Wireshark 패킷 바이트(프레임 257): vpnv4 UPDATE
+
 ![iBGP UPDATE 패킷 바이트](images/bgp-wireshark-ibgp-update-bytes.webp)
 
 ### OPEN, UPDATE 상세(PE-A → HQ-R1)
@@ -212,15 +252,19 @@ Wireshark 패킷 바이트(프레임 257): vpnv4 UPDATE
 - 프레임 48은 세션 초기화 직후 PE-A가 사이트 prefix 4개를 철회하는 UPDATE라서(재광고 전 단계로 보이나 확인하지 못함) `10.1.0.0/16`이나 기본 경로를 광고하는 UPDATE(앞선 목록의 105, 107바이트)는 아직 펼친 화면이 없음.
 
 PE-A OPEN 상세(프레임 40)
+
 ![PE-A OPEN](images/bgp-wireshark-ebgp-open-pe-a.webp)
 
 PE-A UPDATE 상세(프레임 48, 철회)
+
 ![PE-A UPDATE 철회](images/bgp-wireshark-ebgp-update-withdraw.webp)
 
 PE-A UPDATE 철회 prefix 펼친 화면(프레임 48)
+
 ![PE-A UPDATE 철회 prefix](images/bgp-wireshark-ebgp-update-withdraw-detail.webp)
 
 HQ-R1 OPEN 상세(프레임 39)
+
 ![HQ-R1 OPEN](images/bgp-wireshark-ebgp-open-hq-r1.webp)
 
 ### 광고 UPDATE 상세(HQ-R1 ↔ PE-A)
@@ -235,7 +279,9 @@ HQ-R1 OPEN 상세(프레임 39)
 - 세션 수립 순서: OPEN 교환(22.63, 22.66초) → 프레임 42(HQ-R1 광고, 22.69초) → 프레임 45(PE-A 광고, 23.17초) → 프레임 46(PE-A 철회, 23.17초).
 
 HQ-R1 UPDATE(프레임 42)
+
 ![HQ-R1 UPDATE](images/bgp-wireshark-ebgp-update-hq-r1.webp)
 
 PE-A UPDATE(프레임 45)
+
 ![PE-A UPDATE](images/bgp-wireshark-ebgp-update-pe-a-default.webp)

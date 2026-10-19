@@ -12,9 +12,11 @@
 | BR1-SW2-L3 | `show lacp aggregates` | LAG 1(1/1/3, 1/1/4) LACP active | lag1, Interfaces 1/1/4 1/1/3, Heartbeat rate Slow, Hash l3-src-dst, Aggregate mode Active | 통과 |
 
 BR1-SW1-L3 Po1
+
 ![BR1-SW1-L3 Po1](images/Pasted%20image%2020261017185348.png)
 
 BR1-SW2-L3 Po1
+
 ![BR1-SW2-L3 Po1](images/Pasted%20image%2020261017185336.png)
 
 ## Wireshark 확인(Aruba LAG LACPDU)
@@ -33,7 +35,9 @@ BR1-SW2-L3 Po1
 - 장애 시 재분산은 [etherchannel-link-down](../../scenarios/etherchannel-link-down.md) 참조(손실 5개, 최대 응답 5015 ms).
 
 BR1 LAG 멤버 Wireshark(`slow`)
+
 ![BR1 LAG LACP](images/lag-wireshark-list.webp)
 
 BR1-SW1-L3 LACPDU 상세
+
 ![BR1 LAG LACPDU](images/lag-wireshark-lacpdu.webp)

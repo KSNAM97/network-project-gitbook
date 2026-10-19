@@ -12,13 +12,17 @@
 | DC-SW3-L3, DC-SW4-L3 | 장애 전환(SVI shutdown) | Backup이 Master로 전환, 복구 시 Master 복귀 | DC-SW3-L3 shutdown 시 DC-SW4-L3이 Master(Pri 90)로 전환, 복구 후 Backup으로 복귀. 중단 시간은 미측정 | 통과 |
 
 DC-SW3-L3 VRRP Master
+
 ![DC-SW3-L3 VRRP Master](images/Pasted%20image%2020261011234432.png)
 
 DC-SW4-L3 VRRP Backup
+
 ![DC-SW4-L3 VRRP Backup](images/Pasted%20image%2020261011234442.png)
 
 DC-SW4-L3 VRRP Master 전환 확인(DC-SW3-L3 shutdown)
+
 ![DC-SW4-L3 VRRP Master 전환 확인(DC-SW3-L3 shutdown)](images/Pasted%20image%2020261011234548.png)
 
 DC-SW4-L3 VRRP Backup 전환 확인(DC-SW3-L3 복구 후)
+
 ![DC-SW4-L3 VRRP Backup 전환 확인(DC-SW3-L3 복구 후)](images/Pasted%20image%2020261011234933.png)
