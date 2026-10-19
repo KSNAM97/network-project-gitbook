@@ -84,3 +84,47 @@ HQ-R2 `show ip ospf neighbor`(Hub FULL/DR)
 
 HQ-PC1 `traceroute`(터널 경유 복귀)
 ![HQ-PC1 `traceroute`(터널 경유 복귀)](images/dmvpn-hub-traceroute-after.webp)
+
+
+## 백업 Hub(DC-R1) 전환 시험(2026-10-19)
+
+Hub 이중화를 추가한 뒤의 시험. 설정은 [dmvpn-design.md](../../docs/dmvpn-design.md) 7절, 시험 목적지는 DC-SW3-L3 Loopback `10.10.10.13`(서버 VLAN은 DNS ACL로 ICMP가 막힘).
+
+- 장애: DC-R2 `interface tunnel 0` `shutdown`(시각 `10:55:13` 이후), 복구: `no shutdown`(Tunnel0 up `10:56:45`).
+- 연속 `ping`: HQ-PC1 → `10.10.10.13`.
+
+| 순서 | 동작 | 기대 결과 | 측정값 | 판정 |
+|---|---|---|---|---|
+| 1 | 평상시 경로 | Spoke가 DC-R2(`172.16.0.1`)를 Hub로 사용 | HQ-PC1 `traceroute`의 3홉이 `172.16.0.1`. HQ-R2 `show ip route 10.10.10.13`이 OSPF 11, metric 1021, 다음 홉 `172.16.0.1`(Tunnel0). `show dmvpn`에 NHS `172.16.0.1`, `172.16.0.2` 모두 `UP`(`S`) | 통과 |
+| 2 | DC-R2 Tunnel0 `shutdown` | 경로가 DC-R1(`172.16.0.2`)로 전환 | HQ-PC1 `traceroute`의 3홉이 `172.16.0.2`로 변경, 이후 홉은 `10.2.0.6` → `dc-sw3-l3`. ping 44개 전송, 38개 응답(손실 13%), 응답이 없던 구간은 `seq=17 ~ 22`(6개) | 통과 |
+| 3 | Hub 복구 | DC-R2 Tunnel0 이웃 FULL 복귀, 평상시 경로로 복귀 | DC-R2 로그에서 Tunnel0 `up`(10:56:45-46) 후 OSPF 이웃 `10.10.10.1`, `12.12.12.1`, `13.13.13.2`, `11.11.11.2`가 `LOADING to FULL`(10:56:55 - 58). HQ-PC1 `traceroute`의 3홉이 다시 `172.16.0.1` | 통과 |
+
+- 이전 시험(Hub 단일 구성)에서는 shortcut이 약 44초 뒤 중단되고 ISP(MPLS L3VPN) 경유 8홉으로 우회했으나, Hub 이중화 후에는 터널 안에서 DC-R1 경유로 전환되어 홉 수가 같은 5홉으로 유지됨.
+- 손실 6개는 ping 간격(약 1초) 기준 약 6초에 해당. 이 값은 ping 출력에서 읽은 것이고, HQ-R2의 OSPF 이웃 소실 시각 로그는 확보하지 않아 전환 원인(OSPF Dead 시간, 타이머)은 확인하지 못함.
+- 첫 시도에서는 DC-R1 Tunnel0에 `ip ospf cost 100`을 넣었으나 평상시에도 `172.16.0.2`가 선택됨(OSPF에서 전송망에서 라우터로 들어가는 비용이 0이라 Hub의 터널 비용이 Spoke 경로 비용에 반영되지 않음). 비용을 DC-R1의 DC 내부 링크(`gi0/0`, `gi1/0`)로 옮긴 뒤 평상시 경로가 `172.16.0.1`로 바뀜.
+- DC-R1이 먼저 올라와 DR이 되었고 DC-R2는 BDR(`FULL/BDR`). 평상시 경로는 비용으로 결정되어 DR 역할과는 무관.
+
+HQ-PC1 `traceroute 10.10.10.13`(평상시, 3홉 `172.16.0.1`)
+![평상시 traceroute](images/dmvpn-backup-normal-traceroute.webp)
+
+HQ-R2 `show ip route 10.10.10.13`(평상시)
+![HQ-R2 route](images/dmvpn-backup-normal-hq-r2-route.webp)
+
+HQ-R2 `show dmvpn`(NHS 2개 UP)
+![HQ-R2 dmvpn](images/dmvpn-backup-normal-hq-r2-dmvpn.webp)
+
+DC-R2 `show clock`(장애 시작 직전)
+![clock](images/dmvpn-backup-clock.webp)
+
+HQ-PC1 `ping 10.10.10.13` 통계(장애 중, 13% 손실)
+![ping 통계](images/dmvpn-backup-ping-stats.webp)
+
+HQ-PC1 `traceroute 10.10.10.13`(장애 후, 3홉 `172.16.0.2`)
+![장애 후 traceroute](images/dmvpn-backup-traceroute-fail.webp)
+
+DC-R2 로그(Tunnel0 up과 OSPF 이웃 FULL 복귀)
+![DC-R2 로그](images/dmvpn-backup-dc-r2-ospf-log-recovery.webp)
+
+HQ-PC1 `traceroute 10.10.10.13`(복구 후, 3홉 `172.16.0.1`)
+![복구 후 traceroute](images/dmvpn-backup-traceroute-after.webp)
+

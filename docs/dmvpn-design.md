@@ -70,3 +70,79 @@ DMVPN Phase 3(mGRE over IPsec) 구성을 정리한 문서. 값은 참고 저장�
 | Phase 3 shortcut | Spoke 간 ping 후 `traceroute`, `show dmvpn` | 첫 패킷 이후 Spoke 간 직접 터널 수립 |
 | Hub 장애 | Hub 인터페이스 shutdown | 터널 경로 단절 확인(실측 항목) |
 
+## 7. 백업 Hub 구성(DC-R1)
+
+현재 Hub는 `DC-R2` 한 대이고, `DC-R1`은 Private Internet 언더레이에만 참여함(Gi2/0 `203.0.113.1/30`, OSPF 프로세스 2, Area 100). 아래는 `DC-R1`에 Tunnel0을 추가해 두 번째 Hub로 쓰는 구성안이며 2026-10-19에 적용했음. 적용 후 Hub 장애 시험 결과는 `verification/scenarios/dmvpn-hub-failure.md`의 "백업 Hub(DC-R1) 전환 시험"에 기록.
+
+### 7.1 근거(적용 전 확인)
+
+- BR1-R1 NBMA 주소(`203.0.113.13`)에서 `ping 203.0.113.1 source gigabitEthernet 4/0`이 5/5 응답(60/88/100ms). 언더레이 도달성은 추가 구성 없이 확보된 상태.
+- Private-net `pi-whitelist`는 GRE, ESP, UDP 500(isakmp), OSPF를 이미 허용하므로 ACL 변경은 필요 없음.
+
+### 7.2 DC-R1 추가 설정
+
+```text
+crypto isakmp policy 10
+ encryption aes 256
+ hash sha
+ authentication pre-share
+ group 5
+ lifetime 86400
+crypto isakmp key dmvpn-hub address 0.0.0.0 0.0.0.0
+crypto isakmp keepalive 10 3
+crypto ipsec transform-set ts-aes256 esp-aes 256 esp-sha-hmac
+ mode tunnel
+crypto ipsec profile dmvpn-profile
+ set transform-set ts-aes256
+ set pfs group5
+ set security-association lifetime seconds 3600
+!
+int tunnel 0
+ desc dmvpn hub backup
+ ip addr 172.16.0.2 255.255.255.0
+ ip mtu 1400
+ ip tcp adjust-mss 1360
+ tunnel source gi2/0
+ tunnel mode gre multipoint
+ tunnel key 100
+ ip nhrp network-id 100
+ ip nhrp holdtime 600
+ ip nhrp authentication nhrpkey1
+ ip nhrp map multicast dynamic
+ ip nhrp redirect
+ ip nhrp nhs 172.16.0.1
+ ip nhrp map 172.16.0.1 203.0.113.5
+ ip nhrp map multicast 203.0.113.5
+ ip ospf network broadcast
+ ip ospf priority 200
+ ip ospf 10 area 0
+ tunnel protection ipsec profile dmvpn-profile shared
+ no sh
+!
+router ospf 10
+ no passive-interface tunnel 0
+```
+
+- 값은 `DC-R2`와 같고 터널 주소 `172.16.0.2`, OSPF priority 200만 다름. DC-R2를 NHS로 등록해 두 Hub가 서로 이웃(OSPF, NHRP)이 되게 함.
+- 평상시에 Spoke가 DC-R2를 우선하도록 `DC-R1`의 DC 내부 링크에 `ip ospf cost 100`을 둠(`gi0/0`, `gi1/0`). 터널 인터페이스에 비용을 두면 Spoke 경로 비용에 반영되지 않음(첫 시험에서 DC-R1이 평상시에도 선택됨).
+
+### 7.3 Spoke 추가 설정(HQ-R2, BR1-R1, BR2-R2 공통)
+
+```text
+int tunnel0
+ ip nhrp nhs 172.16.0.2
+ ip nhrp map 172.16.0.2 203.0.113.1
+ ip nhrp map multicast 203.0.113.1
+```
+
+- Spoke의 기존 NHS(`172.16.0.1`, 매핑 `203.0.113.5`)는 그대로 둠.
+
+### 7.4 검증 항목
+
+| 항목 | 명령 | 기대 결과 |
+|---|---|---|
+| 두 Hub 등록 | `show dmvpn`(Spoke) | NHS `172.16.0.1`, `172.16.0.2` 모두 UP |
+| OSPF | `show ip ospf neighbor`(DC-R1, DC-R2) | Spoke 3대와 FULL, DC-R2 DR, DC-R1 BDR |
+| 평상시 경로 | Spoke에서 `show ip route 10.10.10.13` | DC-R2(`172.16.0.1`) 경유 |
+| Hub 장애 | DC-R2 `tunnel 0` shutdown 후 HQ-PC1에서 `traceroute 10.10.10.13` | DC-R1(`172.16.0.2`) 경유로 전환, ISP 경유(8홉)와 구분 |
+

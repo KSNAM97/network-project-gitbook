@@ -43,9 +43,11 @@ int lo0
 int gi0/0
  ip ospf 10 area 0
  ip ospf network point-to-point
+ ip ospf cost 100
 int gi1/0
  ip ospf 10 area 0
  ip ospf network point-to-point
+ ip ospf cost 100
 !
 router ospf 2
  router-id 203.0.113.1
@@ -97,4 +99,44 @@ int gi0/0
  service-policy output pm-lan-out
 int gi1/0
  service-policy output pm-lan-out
+!
+crypto isakmp policy 10
+ encryption aes 256
+ hash sha
+ authentication pre-share
+ group 5
+ lifetime 86400
+crypto isakmp key dmvpn-hub address 0.0.0.0 0.0.0.0
+crypto isakmp keepalive 10 3
+crypto ipsec transform-set ts-aes256 esp-aes 256 esp-sha-hmac
+ mode tunnel
+crypto ipsec profile dmvpn-profile
+ set transform-set ts-aes256
+ set pfs group5
+ set security-association lifetime seconds 3600
+!
+int tunnel 0
+ desc dmvpn hub backup
+ ip addr 172.16.0.2 255.255.255.0
+ ip mtu 1400
+ ip tcp adjust-mss 1360
+ tunnel source gi2/0
+ tunnel mode gre multipoint
+ tunnel key 100
+ ip nhrp network-id 100
+ ip nhrp holdtime 600
+ ip nhrp authentication nhrpkey1
+ ip nhrp map multicast dynamic
+ ip nhrp redirect
+ ip nhrp nhs 172.16.0.1
+ ip nhrp map 172.16.0.1 203.0.113.5
+ ip nhrp map multicast 203.0.113.5
+ ip ospf network broadcast
+ ip ospf priority 200
+ ip ospf 10 area 0
+ tunnel protection ipsec profile dmvpn-profile shared
+ no sh
+!
+router ospf 10
+ no passive-interface tunnel 0
 !
