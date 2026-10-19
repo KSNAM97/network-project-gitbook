@@ -211,7 +211,7 @@ router bgp 65100
  exit-address-family
 ```
 
-- 예시는 `ISP-1-PE-A`와 `ISP-1-P1`. VRF, RD/RT, 인터페이스는 `docs/mpls-design.md` 2~4절, 사이트 이웃과 prefix-list는 `docs/bgp-design.md` 5~6절 표 값을 사용. `ip vrf forwarding`을 입력하면 해당 포트의 IP가 지워지므로 `ip addr`를 다시 입력. `mpls label range`는 장비마다 `docs/mpls-design.md` 2절 표의 구간으로 입력(예시는 ISP-1-PE-A 11000 11999, ISP-1-P1 12000 12999). 설정 후 `clear ip bgp *`가 필요할 수 있음.
+- 예시는 `ISP-1-PE-A`와 `ISP-1-P1`. VRF, RD/RT, 인터페이스는 `docs/mpls-design.md` 2-4절, 사이트 이웃과 prefix-list는 `docs/bgp-design.md` 5-6절 표 값을 사용. `ip vrf forwarding`을 입력하면 해당 포트의 IP가 지워지므로 `ip addr`를 다시 입력. `mpls label range`는 장비마다 `docs/mpls-design.md` 2절 표의 구간으로 입력(예시는 ISP-1-PE-A 11000 11999, ISP-1-P1 12000 12999). 설정 후 `clear ip bgp *`가 필요할 수 있음.
 
 ### 3.5 DMVPN(Hub와 Spoke)
 

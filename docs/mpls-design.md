@@ -10,7 +10,7 @@ ISP-1, ISP-2 코어에 MPLS L3VPN을 적용하는 구성을 정리한 문서. IS
 
 ## 2. LDP (MPLS 코어)
 
-- ISP 내부 링크(링크 # 71~75, 76~80)에서만 MPLS 활성화. 사이트 방향 링크는 VRF 인터페이스이므로 `mpls ip` 사용 안 함.
+- ISP 내부 링크(링크 # 71-75, 76-80)에서만 MPLS 활성화. 사이트 방향 링크는 VRF 인터페이스이므로 `mpls ip` 사용 안 함.
 - LDP Router ID는 Loopback0(`mpls ldp router-id lo0 force`). Loopback0 `/32`는 ISP 내부 OSPF로 도달(`docs/ospf-design.md`).
 - `force`는 LDP가 이미 다른 Router ID로 동작 중일 때 즉시 바꾸는 옵션(세션이 재시작됨). 구성 순서를 `mpls ldp router-id` 먼저, 인터페이스 `mpls ip` 나중으로 하면 필요 없고, 이미 `mpls ip`를 켠 뒤 Loopback0으로 바꿔야 할 때만 사용.
 - `mpls label protocol ldp`(표준 LDP), `mpls label range <시작> <끝>`(장비마다 레이블 구간을 나눔), 인터페이스에 `mpls ip`. 타이머와 인증은 기본값.

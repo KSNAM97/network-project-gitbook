@@ -45,7 +45,7 @@ ISP-1, ISP-2 내부의 iBGP Route Reflector와 사이트 엣지 eBGP(사이트 �
 ## 3. ISP 내부 OSPF (iBGP 도달성)
 
 - ISP 내부 링크와 Loopback0 도달성 확보용. process 1, Area 0, router-id는 Loopback0 값. 인터페이스 소속과 네트워크 타입(point-to-point)은 `docs/ospf-design.md` 1~3절 표 기준.
-- 대상: ISP 내부 링크(링크 # 71~75, 76~80)와 Loopback0. 사이트 방향 링크(PE–사이트)는 포함하지 않음(eBGP 세션 주소로만 사용).
+- 대상: ISP 내부 링크(링크 # 71-75, 76-80)와 Loopback0. 사이트 방향 링크(PE–사이트)는 포함하지 않음(eBGP 세션 주소로만 사용).
 - 사이트 방향 인터페이스에는 OSPF를 켜지 않으며, Loopback0는 `ip ospf 1 area 0`으로 광고.
 
 ## 4. iBGP 세션

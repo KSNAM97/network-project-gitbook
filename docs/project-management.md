@@ -24,7 +24,7 @@ KAN-4 ~ KAN-37 전체 34개 이슈 중 33개가 완료이고, KAN-32(PPT 슬라�
 
 ## 1.2 기한의 실제 일정 반영(2026-10-19)
 
-완료한 구성과 검증 이슈 23건(KAN-14 ~ KAN-37 중 해당 건)의 기한을 계획일에서 실제 완료일(2026-10-12 ~ 10-18)로 변경. 근거는 커밋 날짜이며, 근거 커밋이 없는 KAN-4 ~ KAN-13과 PPT 이슈(KAN-32)는 계획일 유지. 이슈별 계획일, 실제일, 근거는 [`jira/jira-actual-due-dates.csv`](../jira/jira-actual-due-dates.csv) 참조.
+완료한 구성과 검증 이슈 23건(KAN-14 - KAN-37 중 해당 건)의 기한을 계획일에서 실제 완료일(2026-10-12 - 10-18)로 변경. 근거는 커밋 날짜이며, 근거 커밋이 없는 KAN-4 - KAN-13과 PPT 이슈(KAN-32)는 계획일 유지. 이슈별 계획일, 실제일, 근거는 [`jira/jira-actual-due-dates.csv`](../jira/jira-actual-due-dates.csv) 참조.
 
 ![Jira 이슈 목록, 기한 열(2026-10-19)](images/project-management/jira-list-actual-due.webp)
 

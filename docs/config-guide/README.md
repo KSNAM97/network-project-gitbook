@@ -45,7 +45,7 @@
 | 사이트 | core | distribution | access |
 |---|---|---|---|
 | hq | HQ-R1, HQ-R2 | HQ-SW-2, HQ-SW-3 | HQ-SW-1 |
-| dc | DC-R1 ~ DC-R4 | DC-SW1-L3 ~ DC-SW4-L3 | DC-SW1-L2, DC-SW2-L2 |
+| dc | DC-R1 - DC-R4 | DC-SW1-L3 - DC-SW4-L3 | DC-SW1-L2, DC-SW2-L2 |
 | br1 | BR1-R1, BR1-R2 | BR1-SW1-L3, BR1-SW2-L3 | BR1-SW3-L3 |
 | br2 | BR2-R1, BR2-R2 | BR2-SW1-L3, BR2-SW2-L3 | BR2-SW3-L2 |
 | isp1, isp2, private-internet | 전체 라우터(PE, P, Private-net) | - | - |
@@ -67,7 +67,7 @@
 | 7 | 2주 목 | DC-DNS-1, DC-DNS-2 | dnsmasq, 레코드 | dhcp-dns-design |
 | 8 | 2주 금 | DC-R1 ~ DC-R4 | 서버 VLAN DNS ACL | dhcp-dns-design 5절, [cisco-router.md](./cisco-router.md) 3.8절 |
 | 8-1 | 선택(10/19~10/21) | DC-SW3-L3, DC-SW4-L3, DC-SW1-L2, DC-SW2-L2 | MLAG 피어, MLAG 포트채널 | mlag-design, [arista-switch.md](./arista-switch.md) 5.4절 |
-| 9 | 3주 수~목 | ISP 장비 | ISP OSPF, iBGP RR, PE `next-hop-self` | bgp-design 1~4절 |
+| 9 | 3주 수-목 | ISP 장비 | ISP OSPF, iBGP RR, PE `next-hop-self` | bgp-design 1-4절 |
 | 10 | 3주 금 | 라우터 | QoS | qos-design, [cisco-router.md](./cisco-router.md) 3.7절 |
 
 ## 7. 저장과 백업
