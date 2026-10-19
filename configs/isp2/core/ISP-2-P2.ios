@@ -1,0 +1,93 @@
+! cisco
+!
+hostname isp-2-p2
+enable secret admin1234
+no ip domain-lookup
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+line con 0
+ logging synchronous
+ exec-timeout 0 0
+line vty 0 4
+ password admin1234
+ login
+!
+int lo0
+ ip addr 200.200.200.3 255.255.255.255
+!
+int gi0/0
+ desc to isp-2-pe-a gi1/0
+ ip addr 100.2.0.6 255.255.255.252
+ no sh
+!
+int gi1/0
+ desc to isp-2-pe-b gi1/0
+ ip addr 100.2.0.13 255.255.255.252
+ no sh
+!
+int gi2/0
+ desc to isp-2-p1 gi2/0
+ ip addr 100.2.0.18 255.255.255.252
+ no sh
+!
+router ospf 1
+ router-id 200.200.200.3
+ passive-interface default
+ no passive-interface gi0/0
+ no passive-interface gi1/0
+ no passive-interface gi2/0
+!
+int lo0
+ ip ospf 1 area 0
+int gi0/0
+ ip ospf 1 area 0
+ ip ospf network point-to-point
+int gi1/0
+ ip ospf 1 area 0
+ ip ospf network point-to-point
+int gi2/0
+ ip ospf 1 area 0
+ ip ospf network point-to-point
+!
+router bgp 65200
+ bgp router-id 200.200.200.3
+ bgp cluster-id 2.2.2.2
+ bgp log-neighbor-changes
+ no auto-summary
+ no synchronization
+ neighbor 200.200.200.1 remote-as 65200
+ neighbor 200.200.200.1 update-source lo0
+ neighbor 200.200.200.1 route-reflector-client
+ neighbor 200.200.200.1 timers 3 9
+ neighbor 200.200.200.4 remote-as 65200
+ neighbor 200.200.200.4 update-source lo0
+ neighbor 200.200.200.4 route-reflector-client
+ neighbor 200.200.200.4 timers 3 9
+ neighbor 200.200.200.2 remote-as 65200
+ neighbor 200.200.200.2 update-source lo0
+ neighbor 200.200.200.2 timers 3 9
+!
+mpls label protocol ldp
+mpls ldp router-id loopback 0
+mpls label range 23000 23999
+!
+int gi0/0
+ mpls ip
+int gi1/0
+ mpls ip
+int gi2/0
+ mpls ip
+!
+router bgp 65200
+ address-family vpnv4
+  neighbor 200.200.200.1 activate
+  neighbor 200.200.200.1 send-community extended
+  neighbor 200.200.200.1 route-reflector-client
+  neighbor 200.200.200.4 activate
+  neighbor 200.200.200.4 send-community extended
+  neighbor 200.200.200.4 route-reflector-client
+  neighbor 200.200.200.2 activate
+  neighbor 200.200.200.2 send-community extended
+ exit-address-family
+!

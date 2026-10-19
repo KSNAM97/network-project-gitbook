@@ -1,0 +1,108 @@
+! aruba
+!
+hostname br1-sw2-l3
+user admin group administrators password plaintext admin1234
+!
+vlan 10
+ name br1-public
+vlan 20
+ name br1-private
+vlan 100
+ name mgmt
+vlan 999
+ name native
+!
+spanning-tree mode mstp
+spanning-tree
+spanning-tree config-name br1
+spanning-tree config-revision 1
+spanning-tree instance 1 vlan 10,20,100
+spanning-tree instance 1 priority 2
+!
+int loopback 0
+ ip addr 12.12.12.12/32
+ ip ospf 12 area 0.0.0.2
+!
+int lag 1
+ desc to br1-sw1-l3 lag1
+ no sh
+ no routing
+ vlan trunk native 999
+ vlan trunk allowed 10,20,100
+ lacp mode active
+!
+int 1/1/1
+ desc to br1-r1 gi1/0
+ no sh
+ ip addr 10.3.0.10/30
+ ip ospf 12 area 0.0.0.2
+ ip ospf network point-to-point
+!
+int 1/1/2
+ desc to br1-r2 gi1/0
+ no sh
+ ip addr 10.3.0.14/30
+ ip ospf 12 area 0.0.0.2
+ ip ospf network point-to-point
+!
+int 1/1/3
+ desc to br1-sw1-l3 1/1/3
+ no sh
+ lag 1
+int 1/1/4
+ desc to br1-sw1-l3 1/1/4
+ no sh
+ lag 1
+!
+int 1/1/5
+ desc to br1-sw3-l3 1/1/2
+ no sh
+ no routing
+ vlan trunk native 999
+ vlan trunk allowed 10,20,100
+router vrrp enable
+!
+int vlan 100
+ desc mgmt
+ ip addr 10.3.100.12/24
+!
+int vlan 10
+ desc vrrp backup for br1-sw1-l3 vlan10
+ ip addr 10.3.10.3/24
+ ip ospf 12 area 0.0.0.2
+ ip ospf passive
+ vrrp 10 address-family ipv4
+  address 10.3.10.1 primary
+  priority 90
+  no sh
+!
+int vlan 20
+ desc vrrp backup for br1-sw1-l3 vlan20
+ ip addr 10.3.20.3/24
+ ip ospf 12 area 0.0.0.2
+ ip ospf passive
+ vrrp 20 address-family ipv4
+  address 10.3.20.1 primary
+  priority 90
+  no sh
+!
+router ospf 12
+ router-id 12.12.12.12
+ area 0.0.0.2
+!
+dhcp-server vrf default
+ pool br1-public
+  range 10.3.10.164 10.3.10.227 prefix-len 24
+  default-router 10.3.10.1
+  dns-server 10.2.50.10 10.2.50.11
+  domain-name lab.local
+  lease 01:00:00
+ exit
+ pool br1-private
+  range 10.3.20.164 10.3.20.227 prefix-len 24
+  default-router 10.3.20.1
+  dns-server 10.2.50.10 10.2.50.11
+  domain-name lab.local
+  lease 01:00:00
+ exit
+ enable

@@ -1,0 +1,90 @@
+! cisco
+!
+hostname private-net
+enable secret admin1234
+no ip domain-lookup
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+line con 0
+ logging synchronous
+ exec-timeout 0 0
+line vty 0 4
+ password admin1234
+ login
+!
+int lo0
+ ip addr 2.2.2.2 255.255.255.255
+!
+int gi0/0
+ desc to dc-r1 gi2/0
+ ip addr 203.0.113.2 255.255.255.252
+ no sh
+int gi1/0
+ desc to dc-r2 gi2/0
+ ip addr 203.0.113.6 255.255.255.252
+ no sh
+int gi2/0
+ desc to hq-r2 gi4/0
+ ip addr 203.0.113.10 255.255.255.252
+ no sh
+int gi3/0
+ desc to br1-r1 gi4/0
+ ip addr 203.0.113.14 255.255.255.252
+ no sh
+int gi4/0
+ desc to br2-r2 gi4/0
+ ip addr 203.0.113.18 255.255.255.252
+ no sh
+!
+router ospf 2
+ router-id 2.2.2.2
+ passive-interface default
+ no passive-interface gi0/0
+ no passive-interface gi1/0
+ no passive-interface gi2/0
+ no passive-interface gi3/0
+ no passive-interface gi4/0
+!
+int lo0
+ ip ospf 2 area 100
+int gi0/0
+ ip ospf 2 area 100
+ ip ospf network point-to-point
+int gi1/0
+ ip ospf 2 area 100
+ ip ospf network point-to-point
+int gi2/0
+ ip ospf 2 area 100
+ ip ospf network point-to-point
+int gi3/0
+ ip ospf 2 area 100
+ ip ospf network point-to-point
+int gi4/0
+ ip ospf 2 area 100
+ ip ospf network point-to-point
+!
+ip access-list extended pi-whitelist
+ permit ospf any host 224.0.0.5
+ permit ospf any host 224.0.0.6
+ permit gre 203.0.113.0 0.0.0.255 203.0.113.0 0.0.0.255
+ permit esp 203.0.113.0 0.0.0.255 203.0.113.0 0.0.0.255
+ permit udp 203.0.113.0 0.0.0.255 203.0.113.0 0.0.0.255 eq isakmp
+ permit icmp any any
+ deny ip any any log
+!
+int gi0/0
+ ip access-group pi-whitelist in
+!
+int gi1/0
+ ip access-group pi-whitelist in
+!
+int gi2/0
+ ip access-group pi-whitelist in
+!
+int gi3/0
+ ip access-group pi-whitelist in
+!
+int gi4/0
+ ip access-group pi-whitelist in
+!

@@ -1,0 +1,151 @@
+! arista
+!
+zerotouch cancel
+!
+hostname dc-sw3-l3
+username admin privilege 15 role network-admin secret admin1234
+!
+vlan 50
+ name server
+vlan 100
+ name mgmt
+vlan 999
+ name native
+!
+int lo0
+ ip add 10.10.10.13/32
+!
+int range et 5-6
+ desc to dc-sw4-l3 po1
+ channel-group 1 mode active
+int po1
+ desc to dc-sw4-l3 po1
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 50,100
+!
+int et7
+ desc to dc-sw1-l2 et1
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 50,100
+int et8
+ desc to dc-sw2-l2 et1
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 50,100
+!
+int et1
+ desc to dc-sw1-l3 et4
+ no switchport
+ ip add 10.2.0.22/30
+!
+int et2
+ desc to dc-sw2-l3 et4
+ no switchport
+ ip add 10.2.0.30/30
+!
+int et3
+ desc to dc-r3 gi0/0
+ no switchport
+ ip add 10.2.0.38/30
+!
+int et4
+ desc to dc-r4 gi0/0
+ no switchport
+ ip add 10.2.0.41/30
+!
+ip routing
+!
+int vlan100
+ desc mgmt vlan for dc-sw3-l3
+ ip add 10.2.100.13/24
+!
+int vlan50
+ desc vrrp master for dc-sw4-l3 vlan50
+ ip add 10.2.50.2/24
+ vrrp 50 ipv4 10.2.50.1
+ vrrp 50 priority-level 110
+! stp mst
+spanning-tree mode mstp
+spanning-tree mst configuration
+ name dc
+ revision 1
+ instance 1 vlan 50,100
+!
+spanning-tree mst 1 priority 4096
+!
+router ospf 10
+ router-id 10.10.10.13
+ passive-interface default
+ no passive-interface et1
+ no passive-interface et2
+ no passive-interface et3
+ no passive-interface et4
+!
+int lo0
+ ip ospf area 0
+!
+int et1
+ ip ospf area 0
+ ip ospf network point-to-point
+!
+int et2
+ ip ospf area 0
+ ip ospf network point-to-point
+!
+int et3
+ ip ospf area 0
+ ip ospf network point-to-point
+!
+int et4
+ ip ospf area 0
+ ip ospf network point-to-point
+!
+int vlan50
+ ip ospf area 0
+!
+vlan 4094
+ name mlag-peer
+ trunk group MLAGPEER
+no spanning-tree vlan-id 4094
+!
+int po1
+ switchport trunk allowed vlan 50,100,4094
+ switchport trunk group MLAGPEER
+!
+int vlan4094
+ desc mlag peer
+ ip add 10.2.254.1/30
+ no autostate
+!
+mlag configuration
+ domain-id dc-mlag
+ local-interface vlan4094
+ peer-address 10.2.254.2
+ peer-link port-channel 1
+!
+exit
+!
+default int et7
+default int et8
+int et7
+ desc to dc-sw1-l2 et1
+ channel-group 10 mode active
+int et8
+ desc to dc-sw2-l2 et1
+ channel-group 20 mode active
+!
+int po10
+ desc to dc-sw1-l2 po10
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 50,100
+ mlag 10
+int po20
+ desc to dc-sw2-l2 po20
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 50,100
+ mlag 20
+!

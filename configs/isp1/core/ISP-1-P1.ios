@@ -1,0 +1,93 @@
+! cisco
+!
+hostname isp-1-p1
+enable secret admin1234
+no ip domain-lookup
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+line con 0
+ logging synchronous
+ exec-timeout 0 0
+line vty 0 4
+ password admin1234
+ login
+!
+int lo0
+ ip addr 100.100.100.2 255.255.255.255
+!
+int gi0/0
+ desc to isp-1-pe-a gi0/0
+ ip addr 100.1.0.2 255.255.255.252
+ no sh
+!
+int gi1/0
+ desc to isp-1-pe-b gi0/0
+ ip addr 100.1.0.9 255.255.255.252
+ no sh
+!
+int gi2/0
+ desc to isp-1-p2 gi2/0
+ ip addr 100.1.0.17 255.255.255.252
+ no sh
+!
+router ospf 1
+ router-id 100.100.100.2
+ passive-interface default
+ no passive-interface gi0/0
+ no passive-interface gi1/0
+ no passive-interface gi2/0
+!
+int lo0
+ ip ospf 1 area 0
+int gi0/0
+ ip ospf 1 area 0
+ ip ospf network point-to-point
+int gi1/0
+ ip ospf 1 area 0
+ ip ospf network point-to-point
+int gi2/0
+ ip ospf 1 area 0
+ ip ospf network point-to-point
+!
+router bgp 65100
+ bgp router-id 100.100.100.2
+ bgp cluster-id 1.1.1.1
+ bgp log-neighbor-changes
+ no auto-summary
+ no synchronization
+ neighbor 100.100.100.1 remote-as 65100
+ neighbor 100.100.100.1 update-source lo0
+ neighbor 100.100.100.1 route-reflector-client
+ neighbor 100.100.100.1 timers 3 9
+ neighbor 100.100.100.4 remote-as 65100
+ neighbor 100.100.100.4 update-source lo0
+ neighbor 100.100.100.4 route-reflector-client
+ neighbor 100.100.100.4 timers 3 9
+ neighbor 100.100.100.3 remote-as 65100
+ neighbor 100.100.100.3 update-source lo0
+ neighbor 100.100.100.3 timers 3 9
+!
+mpls label protocol ldp
+mpls ldp router-id loopback 0
+mpls label range 12000 12999
+!
+int gi0/0
+ mpls ip
+int gi1/0
+ mpls ip
+int gi2/0
+ mpls ip
+!
+router bgp 65100
+ address-family vpnv4
+  neighbor 100.100.100.1 activate
+  neighbor 100.100.100.1 send-community extended
+  neighbor 100.100.100.1 route-reflector-client
+  neighbor 100.100.100.4 activate
+  neighbor 100.100.100.4 send-community extended
+  neighbor 100.100.100.4 route-reflector-client
+  neighbor 100.100.100.3 activate
+  neighbor 100.100.100.3 send-community extended
+ exit-address-family
+!

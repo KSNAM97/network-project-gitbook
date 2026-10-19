@@ -1,0 +1,18 @@
+# alpine
+#
+# hostname
+echo br2-pc1 > /etc/hostname
+hostname -F /etc/hostname
+#
+# interfaces
+printf 'auto eth0\niface eth0 inet dhcp\n' > /etc/network/interfaces
+#
+# dhcp
+udhcpc -i eth0
+#
+# 검증
+cat /etc/hostname
+cat /etc/network/interfaces
+ip addr
+ip route
+cat /etc/resolv.conf

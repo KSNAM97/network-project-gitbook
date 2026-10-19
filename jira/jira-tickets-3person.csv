@@ -1,0 +1,35 @@
+Summary,Issue Type,Label,Priority,Description,Due Date
+[1주] AS/IP/VLAN 설계표 확정,Task,net-cloud;policy,High,network-project-final.md 기준 확정 및 팀 공유 / 일정: 1주 월(10/12),2026-10-12
+[1주] GNS3 서버/Jira/Slack/Git 환경 세팅,Task,net-cloud;policy,High,"공유 서버 IP 배포, 저장소 초기화 / 일정: 1주 월(10/12)",2026-10-12
+[1주] 이미지별 RAM 실측(7200/IOU/cEOS),Task,net-cloud,High,"cEOS 버전별 피크/상주 메모리, 34대 동시 기동 여부 확정 / 일정: 1주 화(10/13)",2026-10-13
+[1주] 전체 노드 배치 및 기본 링크 연결,Task,net-cloud;policy,High,인터페이스 매핑표 기준 / 일정: 1주 화(10/13),2026-10-13
+[1주] HQ VLAN/트렁크(vlan-hq-public/private),Task,net-cloud;vlan-hq-public;vlan-hq-private,High,HQ-SW-1~3 / 일정: 1주 목(10/15),2026-10-15
+[1주] HQ VRRP + Po1-3,Task,net-cloud;vlan-hq-public,High,HQ-R1/HQ-R2 게이트웨이 이중화 / 일정: 1주 목(10/15),2026-10-15
+"[1주] DC VLAN/트렁크(vlan-dc-server, Arista)",Task,net-cloud;vlan-dc-server,High,DC-SW1~4-L3 / 일정: 1주 수(10/14),2026-10-14
+[1주] DC VRRP + MSTP 루트 고정,Task,net-cloud;vlan-dc-server,High,"DC-SW3-L3 루트, cEOS 교차연결 루프 방지 / 일정: 1주 수(10/14)",2026-10-14
+[1주] BR1 VLAN/트렁크/VRRP(vlan-br1-public/private),Task,policy;vlan-br1-public;vlan-br1-private,High,BR1-SW1~3-L3 + BR1-R1/R2 / 일정: 1주 수(10/14),2026-10-14
+[1주] BR2 VLAN/트렁크/VRRP(vlan-br2-public/private),Task,policy;vlan-br2-public;vlan-br2-private,High,BR2-SW1-L3/SW2-L3/SW3-L2 + BR2-R1/R2 / 일정: 1주 목(10/15),2026-10-15
+"[1주] 사이트 내부 OSPF(DC Area0, HQ Area1, BR1 Area2, BR2 Area3) + 사이트 DHCP 확정",Task,net-cloud;policy,Medium,"프로세스 DC 10, HQ 11, BR1 12, BR2 13 / ABR: HQ-R2, BR1-R1, BR2-R2 / 사이트 DHCP: HQ, BR1, BR2 게이트웨이 스위치 풀(.100~.227) / 상세: docs/ospf-design.md, docs/dhcp-dns-design.md / 일정: 1주 금(10/16), DC/HQ와 BR1/BR2 내부통신 검증 포함",2026-10-16
+[3주] ISP-1 내부 OSPF + iBGP RR 5세션,Task,net-cloud,High,"AS65100, P1/P2 RR, PE-A/PE-B Client, Loopback 100.100.100.1-4 / 기한: 3주 수(10/28)",2026-10-28
+[3주] ISP-2 내부 OSPF + iBGP RR 5세션,Task,net-cloud,High,"AS65200, P1/P2 RR, PE-A/PE-B Client, Loopback 200.200.200.1-4 / 기한: 3주 수(10/28)",2026-10-28
+[3주] PE 정책(prefix-list)·VRF 경유 사이트 간 도달,Task,net-cloud,High,"PE 입력 prefix-list, vpnv4 사이트 /16 전달, 사이트 간 ISP 경유 도달 / 일정: 3주 목(10/29)",2026-10-29
+"[2주] 사이트 엣지 eBGP(8세션, PE VRF corp) + route-map/prefix-list",Task,net-cloud;policy,High,"사이트 라우터 eBGP, PE VRF corp 안의 eBGP·default-originate, route-map·prefix-list, OSPF default-information originate / 일정: 2주 월(10/19)",2026-10-19
+[2주] Private Internet ACL 화이트리스트,Task,net-cloud,High,"5개 링크, OSPF/GRE/ESP/UDP500만 허용 / 일정: 2주 화(10/20)",2026-10-20
+[2주] Private Internet OSPF(프로세스2) 구성,Task,net-cloud,High,"Area100, 언더레이 전용 / 일정: 주말(10/17), NBMA 주소 상호도달 확인 포함",2026-10-17
+[2주] DMVPN Hub 구성(DC-R2),Task,net-cloud,High,"mGRE, NHRP, IPsec profile / 일정: 2주 화(10/20)",2026-10-20
+[2주] DMVPN Spoke 구성(BR1-R1),Task,policy;vlan-br1-public,High,"Phase3 shortcut / 일정: 2주 수(10/21), Phase3 shortcut 검증은 2주 목(10/22)",2026-10-21
+[2주] DMVPN Spoke 구성(BR2-R2),Task,policy;vlan-br2-public,High,"Phase3 shortcut / 일정: 2주 수(10/21), Phase3 shortcut 검증은 2주 목(10/22)",2026-10-21
+[2주] DC-DNS-1·DC-DNS-2(주/백업) 서버 배치 및 검증(vlan-dc-server),Task,net-cloud;vlan-dc-server,Medium,"dig 테스트, 주 서버 중단 시 백업 응답, 알파인 호스트 DHCP 할당 확인 / 일정: 2주 목(10/22)",2026-10-22
+[3주] QoS 정책 20개 인터페이스 적용,Task,net-cloud;policy,Medium,"pm-lan-in/out, 병목 실측 / 일정: 3주 금(10/30)",2026-10-30
+[2주] DNS 접근 ACL(53 포트),Task,policy,Medium,"사이트간 화이트리스트 / 일정: 2주 금(10/23), 전 사이트 상호도달 확인과 통합 테스트 포함",2026-10-23
+[3주] VRRP Failover 실측,Task,net-cloud;policy,High,"전환시간 측정, 면접 대비 핵심 / 일정: 3주 월(10/26)",2026-10-26
+[3주] EtherChannel 멤버 다운 실측,Task,net-cloud;policy,Medium,일정: 3주 월(10/26),2026-10-26
+[3주] ISP-1 장애시 ISP-2/DMVPN 전환 실측,Task,net-cloud,High,"BGP hold-time(9초) 후 기본 경로 철회, ISP-2/DMVPN 전환 확인 / 일정: 3주 목(10/29)",2026-10-29
+[3주] DMVPN Hub 장애 실측,Task,net-cloud,High,Private Internet 단일 노드 리스크 / 일정: 3주 화(10/27),2026-10-27
+[3주] 트러블슈팅 로그 정리,Task,policy,Medium,docs/troubleshooting-log.md / 일정: 3주 금(10/30),2026-10-30
+[3.5주] PPT 슬라이드 작성 및 리허설,Task,net-cloud;policy,High,"일정: 3.5주 월~수(11/2~11/4, 수요일은 반일)",2026-11-04
+[2주] DMVPN Spoke 구성(HQ-R2),Task,policy,High,"Phase3 shortcut / 일정: 2주 수(10/21), Phase3 shortcut 검증은 2주 목(10/22)",2026-10-21
+"[2주] ISP MPLS 코어(LDP, 내부 링크 mpls ip)",Task,net-cloud,High,"ISP-1, ISP-2 PE·P 8대, LDP 이웃·레이블 확인 / 일정: 주말(10/18)",2026-10-18
+[2주] PE VRF corp + MP-BGP vpnv4(RR),Task,net-cloud,High,"PE 4대 VRF·RD/RT, 10세션 vpnv4, RR route-reflector-client / 일정: 주말(10/18)",2026-10-18
+[2주] BR1 스위치 Aruba CX 교체(3대) + 재검증,Task,policy,High,"BR1-SW1·2·3-L3를 Aruba CX로 교체: 컨피그 전환(VLAN, LAG, MSTP, VRRP, OSPF, DHCP), 포트 매핑, BR1 재검증 / 일정: 주말(10/18)",2026-10-18
+[추가] DC MLAG 구성 및 검증(선택),Task,net-cloud,Medium,"DC-SW3-L3/SW4-L3 MLAG(domain dc-mlag, peer-link Po1), DC-SW1-L2/SW2-L2 dual-homing, 장애 전환 검증 / 일정: 선택(10/19~10/21)",2026-10-21

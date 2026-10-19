@@ -1,0 +1,124 @@
+! cisco
+!
+hostname dc-r3
+enable secret admin1234
+no ip domain-lookup
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+line con 0
+ logging synchronous
+ exec-timeout 0 0
+line vty 0 4
+ password admin1234
+ login
+!
+int lo0
+ ip addr 10.10.10.3 255.255.255.255
+!
+int gi0/0
+ desc to dc-sw3-l3 et3
+ ip addr 10.2.0.37 255.255.255.252
+ no sh
+!
+int gi1/0
+ desc to dc-sw4-l3 et3
+ ip addr 10.2.0.45 255.255.255.252
+ no sh
+!
+int gi2/0
+ desc to dc-r4 gi2/0
+ ip addr 10.2.0.53 255.255.255.252
+ no sh
+!
+int gi3/0
+ desc to isp-1-pe-a gi3/0
+ ip addr 100.1.21.1 255.255.255.252
+ no sh
+!
+router ospf 10
+ router-id 10.10.10.3
+ passive-interface default
+ no passive-interface gi0/0
+ no passive-interface gi1/0
+ no passive-interface gi2/0
+!
+int lo0
+ ip ospf 10 area 0
+!
+int gi0/0
+ ip ospf 10 area 0
+ ip ospf network point-to-point
+!
+int gi1/0
+ ip ospf 10 area 0
+ ip ospf network point-to-point
+!
+int gi2/0
+ ip ospf 10 area 0
+ ip ospf network point-to-point
+!
+ip route 10.2.0.0 255.255.0.0 null0
+ip prefix-list pl-site seq 5 permit 10.2.0.0/16
+ip prefix-list pl-default seq 5 permit 0.0.0.0/0
+route-map rm-isp-out permit 10
+ match ip address prefix-list pl-site
+route-map rm-isp-in permit 10
+ match ip address prefix-list pl-default
+!
+router bgp 65002
+ bgp router-id 10.10.10.3
+ bgp log-neighbor-changes
+ no auto-summary
+ no synchronization
+ neighbor 100.1.21.2 remote-as 65100
+ neighbor 100.1.21.2 timers 3 9
+ neighbor 100.1.21.2 route-map rm-isp-in in
+ neighbor 100.1.21.2 route-map rm-isp-out out
+ network 10.2.0.0 mask 255.255.0.0
+!
+router ospf 10
+ default-information originate metric 100 metric-type 1
+!
+ip access-list extended dns-only
+ permit udp any host 10.2.50.10 eq 53
+ permit tcp any host 10.2.50.10 eq 53
+ permit udp any host 10.2.50.11 eq 53
+ permit tcp any host 10.2.50.11 eq 53
+ deny ip any 10.2.50.0 0.0.0.255 log
+ permit ip any any
+!
+int gi0/0
+ ip access-group dns-only out
+int gi1/0
+ ip access-group dns-only out
+!
+ip access-list extended acl-qos-dns
+ permit udp any any eq 53
+ permit udp any eq 53 any
+ permit tcp any any eq 53
+ permit tcp any eq 53 any
+!
+class-map match-any cm-control
+ match dscp cs6
+class-map match-any cm-business
+ match access-group name acl-qos-dns
+!
+policy-map pm-lan-out-child
+ class cm-control
+  bandwidth percent 10
+ class cm-business
+  bandwidth percent 30
+  set dscp af31
+ class class-default
+  fair-queue
+policy-map pm-lan-out
+ class class-default
+  shape average 10000000
+  service-policy pm-lan-out-child
+!
+int gi0/0
+ service-policy output pm-lan-out
+int gi1/0
+ service-policy output pm-lan-out
+!

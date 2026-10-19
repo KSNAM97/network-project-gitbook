@@ -1,0 +1,122 @@
+! cisco
+!
+hostname isp-1-pe-a
+enable secret admin1234
+no ip domain-lookup
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+line con 0
+ logging synchronous
+ exec-timeout 0 0
+line vty 0 4
+ password admin1234
+ login
+!
+int lo0
+ ip addr 100.100.100.1 255.255.255.255
+!
+int gi0/0
+ desc to isp-1-p1 gi0/0
+ ip addr 100.1.0.1 255.255.255.252
+ no sh
+!
+int gi1/0
+ desc to isp-1-p2 gi0/0
+ ip addr 100.1.0.5 255.255.255.252
+ no sh
+!
+int gi2/0
+ desc to hq-r1 gi3/0
+ ip addr 100.1.11.2 255.255.255.252
+ no sh
+!
+int gi3/0
+ desc to dc-r3 gi3/0
+ ip addr 100.1.21.2 255.255.255.252
+ no sh
+!
+router ospf 1
+ router-id 100.100.100.1
+ passive-interface default
+ no passive-interface gi0/0
+ no passive-interface gi1/0
+!
+int lo0
+ ip ospf 1 area 0
+int gi0/0
+ ip ospf 1 area 0
+ ip ospf network point-to-point
+int gi1/0
+ ip ospf 1 area 0
+ ip ospf network point-to-point
+!
+router bgp 65100
+ bgp router-id 100.100.100.1
+ bgp log-neighbor-changes
+ no auto-summary
+ no synchronization
+ neighbor 100.100.100.2 remote-as 65100
+ neighbor 100.100.100.2 update-source lo0
+ neighbor 100.100.100.2 timers 3 9
+ neighbor 100.100.100.2 next-hop-self
+ neighbor 100.100.100.3 remote-as 65100
+ neighbor 100.100.100.3 update-source lo0
+ neighbor 100.100.100.3 timers 3 9
+ neighbor 100.100.100.3 next-hop-self
+!
+mpls label protocol ldp
+mpls ldp router-id loopback 0
+mpls label range 11000 11999
+!
+int gi0/0
+ mpls ip
+int gi1/0
+ mpls ip
+!
+ip vrf corp
+ rd 65100:1
+ route-target export 65100:1
+ route-target import 65100:1
+!
+int gi2/0
+ ip vrf forwarding corp
+ ip addr 100.1.11.2 255.255.255.252
+int gi3/0
+ ip vrf forwarding corp
+ ip addr 100.1.21.2 255.255.255.252
+!
+router bgp 65100
+ address-family vpnv4
+  neighbor 100.100.100.2 activate
+  neighbor 100.100.100.2 send-community extended
+  neighbor 100.100.100.3 activate
+  neighbor 100.100.100.3 send-community extended
+ exit-address-family
+!
+ip prefix-list pl-hq-in seq 5 permit 10.1.0.0/16
+ip prefix-list pl-deny-all seq 5 deny 0.0.0.0/0 le 32
+!
+router bgp 65100
+ address-family ipv4 vrf corp
+  neighbor 100.1.11.1 remote-as 65001
+  neighbor 100.1.11.1 activate
+  neighbor 100.1.11.1 timers 3 9
+  neighbor 100.1.11.1 prefix-list pl-hq-in in
+  neighbor 100.1.11.1 prefix-list pl-deny-all out
+  neighbor 100.1.11.1 default-originate
+ exit-address-family
+!
+ip prefix-list pl-dc-in seq 5 permit 10.2.0.0/16
+ip prefix-list pl-deny-all seq 5 deny 0.0.0.0/0 le 32
+!
+router bgp 65100
+ address-family ipv4 vrf corp
+  neighbor 100.1.21.1 remote-as 65002
+  neighbor 100.1.21.1 activate
+  neighbor 100.1.21.1 timers 3 9
+  neighbor 100.1.21.1 prefix-list pl-dc-in in
+  neighbor 100.1.21.1 prefix-list pl-deny-all out
+  neighbor 100.1.21.1 default-originate
+ exit-address-family
+!

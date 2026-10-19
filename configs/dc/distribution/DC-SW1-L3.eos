@@ -1,0 +1,68 @@
+! arista
+!
+zerotouch cancel
+!
+hostname dc-sw1-l3
+username admin privilege 15 role network-admin secret admin1234
+!
+ip routing
+!
+int lo0
+ ip add 10.10.10.11/32
+!
+int et1
+ desc to dc-r1 gi0/0
+ no switchport
+ ip add 10.2.0.2/30
+!
+int et2
+ desc to dc-r2 gi0/0
+ no switchport
+ ip add 10.2.0.9/30
+int et3
+ desc to dc-sw2-l3 et3
+ no switchport
+ ip add 10.2.0.17/30
+!
+int et4
+ desc to dc-sw3-l3 et1
+ no switchport
+ ip add 10.2.0.21/30
+!
+int et5
+ desc to dc-sw4-l3 et1
+ no switchport
+ ip add 10.2.0.25/30
+!
+router ospf 10
+ router-id 10.10.10.11
+ passive-interface default
+ no passive-interface et1
+ no passive-interface et2
+ no passive-interface et3
+ no passive-interface et4
+ no passive-interface et5
+!
+int lo0
+ ip ospf area 0
+!
+int et1
+ ip ospf area 0
+ ip ospf network point-to-point
+!
+int et2
+ ip ospf area 0
+ ip ospf network point-to-point
+!
+int et3
+ ip ospf area 0
+ ip ospf network point-to-point
+!
+int et4
+ ip ospf area 0
+ ip ospf network point-to-point
+!
+int et5
+ ip ospf area 0
+ ip ospf network point-to-point
+!

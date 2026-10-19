@@ -1,0 +1,52 @@
+! aruba
+!
+hostname br1-sw3-l3
+user admin group administrators password plaintext admin1234
+!
+vlan 10
+ name br1-public
+vlan 20
+ name br1-private
+vlan 100
+ name mgmt
+vlan 999
+ name native
+!
+spanning-tree mode mstp
+spanning-tree
+spanning-tree config-name br1
+spanning-tree config-revision 1
+spanning-tree instance 1 vlan 10,20,100
+!
+int 1/1/1
+ desc to br1-sw1-l3 1/1/5
+ no sh
+ no routing
+ vlan trunk native 999
+ vlan trunk allowed 10,20,100
+!
+int 1/1/2
+ desc to br1-sw2-l3 1/1/5
+ no sh
+ no routing
+ vlan trunk native 999
+ vlan trunk allowed 10,20,100
+!
+int 1/1/6
+ desc to br1-pc1 eth0
+ no sh
+ no routing
+ vlan access 10
+ spanning-tree bpdu-guard
+!
+int 1/1/7
+ desc to br1-pc2 eth0
+ no sh
+ no routing
+ vlan access 20
+ spanning-tree bpdu-guard
+!
+int vlan 100
+ desc mgmt
+ ip addr 10.3.100.13/24
+ no sh

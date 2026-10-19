@@ -1,0 +1,63 @@
+! cisco
+!
+hostname br2-sw3-l2
+enable secret admin1234
+no ip domain-lookup
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+line con 0
+ logging synchronous
+ exec-timeout 0 0
+line vty 0 4
+ password admin1234
+ login
+!
+vlan 10
+ name br2-public
+vlan 20
+ name br2-private
+vlan 100
+ name mgmt
+vlan 999
+ name native
+!
+int vlan 100
+ ip addr 10.4.100.23 255.255.255.0
+ no sh
+!
+int gi0/0
+ desc to br2-sw1-l3 gi2/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,100
+!
+int gi0/1
+ desc to br2-sw2-l3 gi2/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,100
+!
+int gi3/0
+ desc to br2-pc1 eth0
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+!
+int gi3/1
+ desc to br2-pc2 eth0
+ switchport access vlan 20
+ switchport mode access
+ spanning-tree portfast
+!
+ switchport mode access
+ spanning-tree portfast
+! stp mst
+spanning-tree mode mst
+spanning-tree mst configuration
+ name br2
+ revision 1
+ instance 1 vlan 10,20,100
+!

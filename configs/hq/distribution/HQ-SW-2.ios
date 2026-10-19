@@ -1,0 +1,127 @@
+! cisco
+!
+hostname hq-sw-2
+enable secret admin1234
+no ip domain-lookup
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+line con 0
+ logging synchronous
+ exec-timeout 0 0
+line vty 0 4
+ password admin1234
+ login
+!
+int lo0
+ ip addr 11.11.11.12 255.255.255.255
+!
+int gi1/0
+ desc to hq-r1 gi0/0
+ no switchport
+ ip addr 10.1.0.2 255.255.255.252
+ no sh
+!
+int gi1/1
+ desc to hq-r2 gi0/0
+ no switchport
+ ip addr 10.1.0.6 255.255.255.252
+ no sh
+!
+vlan 10
+ name hq-public
+vlan 20
+ name hq-private
+vlan 100
+ name mgmt
+vlan 999
+ name native
+!
+int range gi0/0 - 1
+ desc to hq-sw-1 po1
+ channel-group 1 mode active
+int range gi0/2 - 3
+ desc to hq-sw-3 po3
+ channel-group 3 mode active
+!
+int po1
+ desc to hq-sw-1 po1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,100
+int po3
+ desc to hq-sw-3 po3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,100
+!
+int vlan 100
+ ip addr 10.1.100.12 255.255.255.0
+ no sh
+!
+ip routing
+int vlan10
+ desc vrrp master for hq-sw-3 vlan10
+ ip addr 10.1.10.2 255.255.255.0
+ vrrp 10 ip 10.1.10.1
+ vrrp 10 priority 110
+ no sh
+!
+int vlan20
+ desc vrrp master for hq-sw-3 vlan20
+ ip addr 10.1.20.2 255.255.255.0
+ vrrp 20 ip 10.1.20.1
+ vrrp 20 priority 110
+ no sh
+! stp mst
+spanning-tree mode mst
+spanning-tree mst configuration
+ name hq
+ revision 1
+ instance 1 vlan 10,20,100
+!
+! stp root
+spanning-tree mst 1 priority 4096
+!
+router ospf 11
+ router-id 11.11.11.12
+ passive-interface default
+ no passive-interface gi1/0
+ no passive-interface gi1/1
+!
+int lo0
+ ip ospf 11 area 1
+int gi1/0
+ ip ospf 11 area 1
+ ip ospf network point-to-point
+int gi1/1
+ ip ospf 11 area 1
+ ip ospf network point-to-point
+!
+int vlan10
+ ip ospf 11 area 1
+int vlan20
+ ip ospf 11 area 1
+!
+service dhcp
+ip dhcp excluded-address 10.1.10.1 10.1.10.99
+ip dhcp excluded-address 10.1.10.164 10.1.10.254
+ip dhcp excluded-address 10.1.20.1 10.1.20.99
+ip dhcp excluded-address 10.1.20.164 10.1.20.254
+!
+ip dhcp pool hq-public
+ network 10.1.10.0 255.255.255.0
+ default-router 10.1.10.1
+ dns-server 10.2.50.10 10.2.50.11
+ domain-name lab.local
+ lease 1
+!
+ip dhcp pool hq-private
+ network 10.1.20.0 255.255.255.0
+ default-router 10.1.20.1
+ dns-server 10.2.50.10 10.2.50.11
+ domain-name lab.local
+ lease 1
+!

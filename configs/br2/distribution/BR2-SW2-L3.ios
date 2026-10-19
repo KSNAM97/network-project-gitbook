@@ -1,0 +1,125 @@
+! cisco
+!
+hostname br2-sw2-l3
+enable secret admin1234
+no ip domain-lookup
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+line con 0
+ logging synchronous
+ exec-timeout 0 0
+line vty 0 4
+ password admin1234
+ login
+!
+vlan 10
+ name br2-public
+vlan 20
+ name br2-private
+vlan 100
+ name mgmt
+vlan 999
+ name native
+!
+int lo0
+ ip addr 13.13.13.12 255.255.255.255
+!
+int range gi1/0 - 1
+ desc to br2-sw1-l3 po1
+ channel-group 1 mode active
+!
+int po1
+ desc to br2-sw1-l3 po1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,100
+!
+int gi0/0
+ desc to br2-r1 gi1/0
+ no switchport
+ ip addr 10.4.0.10 255.255.255.252
+ no sh
+!
+int gi0/1
+ desc to br2-r2 gi1/0
+ no switchport
+ ip addr 10.4.0.14 255.255.255.252
+ no sh
+!
+int gi2/0
+ desc to br2-sw3-l2 gi0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,100
+!
+int vlan 100
+ ip addr 10.4.100.12 255.255.255.0
+ no sh
+! stp mst
+spanning-tree mode mst
+spanning-tree mst configuration
+ name br2
+ revision 1
+ instance 1 vlan 10,20,100
+ spanning-tree mst 1 priority 8192
+!
+ip routing
+int vlan10
+ desc vrrp backup for br2-sw1-l3 vlan10
+ ip addr 10.4.10.3 255.255.255.0
+ vrrp 10 ip 10.4.10.1
+ vrrp 10 priority 90
+ no sh
+!
+ip routing
+int vlan20
+ desc vrrp backup for br2-sw1-l3 vlan20
+ ip addr 10.4.20.3 255.255.255.0
+ vrrp 20 ip 10.4.20.1
+ vrrp 20 priority 90
+ no sh
+!
+router ospf 13
+ router-id 13.13.13.12
+ passive-interface default
+ no passive-interface gi0/0
+ no passive-interface gi0/1
+!
+int lo0
+ ip ospf 13 area 3
+int gi0/0
+ ip ospf 13 area 3
+ ip ospf network point-to-point
+int gi0/1
+ ip ospf 13 area 3
+ ip ospf network point-to-point
+!
+int vlan10
+ ip ospf 13 area 3
+!
+int vlan20
+ ip ospf 13 area 3
+!
+service dhcp
+ip dhcp excluded-address 10.4.10.1 10.4.10.163
+ip dhcp excluded-address 10.4.10.228 10.4.10.254
+ip dhcp excluded-address 10.4.20.1 10.4.20.163
+ip dhcp excluded-address 10.4.20.228 10.4.20.254
+!
+ip dhcp pool br2-public
+ network 10.4.10.0 255.255.255.0
+ default-router 10.4.10.1
+ dns-server 10.2.50.10 10.2.50.11
+ domain-name lab.local
+ lease 1
+!
+ip dhcp pool br2-private
+ network 10.4.20.0 255.255.255.0
+ default-router 10.4.20.1
+ dns-server 10.2.50.10 10.2.50.11
+ domain-name lab.local
+ lease 1
+!

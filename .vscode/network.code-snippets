@@ -1,0 +1,60 @@
+{
+    "cisco base": {
+        "scope": "cisco",
+        "prefix": "cbase",
+        "body": [
+            "! cisco", "!", "hostname ${1:hq-r1}", "enable secret admin1234", "no ip domain-lookup",
+            "service timestamps debug datetime msec", "service timestamps log datetime msec", "!",
+            "line con 0", " logging synchronous", " exec-timeout 0 0", "line vty 0 4", " password admin1234", " login", "!", "$0"
+        ]
+    },
+    "cisco loopback": {
+        "scope": "cisco",
+        "prefix": "clo",
+        "body": ["int lo0", " ip addr ${1:11.11.11.1} 255.255.255.255", "!", "$0"]
+    },
+    "cisco interface": {
+        "scope": "cisco",
+        "prefix": "cint",
+        "body": ["int gi${1:0/0}", " desc to ${2:peer} ${3:gi0/0}", " ip addr ${4:10.1.0.1} ${5:255.255.255.252}", " no sh", "!", "$0"]
+    },
+    "cisco svi": {
+        "scope": "cisco",
+        "prefix": "csvi",
+        "body": ["int vlan${1:10}", " ip addr ${2:10.1.10.2} 255.255.255.0", " no sh", "!", "$0"]
+    },
+    "cisco trunk po": {
+        "scope": "cisco",
+        "prefix": "cpo",
+        "body": [
+            "int range gi${1:1/0} - ${2:1}", " channel-group ${3:1} mode active", "!",
+            "int po${3:1}", " switchport trunk encapsulation dot1q", " switchport mode trunk",
+            " switchport trunk native vlan 999", " switchport trunk allowed vlan ${4:10,20,100}", "!", "$0"
+        ]
+    },
+    "cisco access": {
+        "scope": "cisco",
+        "prefix": "cacc",
+        "body": ["int gi${1:3/0}", " desc to ${2:hq-pc1} eth0", " switchport mode access", " switchport access vlan ${3:10}", " spanning-tree portfast", " no sh", "!", "$0"]
+    },
+    "arista base": {
+        "scope": "eos",
+        "prefix": "abase",
+        "body": ["! arista", "!", "hostname ${1:dc-sw3-l3}", "username admin secret admin1234", "spanning-tree mode rstp", "!", "$0"]
+    },
+    "arista interface": {
+        "scope": "eos",
+        "prefix": "aint",
+        "body": ["int et${1:1}", " desc to ${2:peer} ${3:et1}", " no switchport", " ip add ${4:10.2.0.38/30}", "$0"]
+    },
+    "arista range": {
+        "scope": "eos",
+        "prefix": "arange",
+        "body": ["int range et ${1:5-6}", " channel-group ${2:1} mode active", "$0"]
+    },
+    "arista vlan": {
+        "scope": "eos",
+        "prefix": "avlan",
+        "body": ["vlan ${1:50}", " name ${2:server}", "$0"]
+    }
+}

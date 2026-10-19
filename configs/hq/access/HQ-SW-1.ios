@@ -1,0 +1,67 @@
+! cisco
+!
+hostname hq-sw-1
+enable secret admin1234
+no ip domain-lookup
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+line con 0
+ logging synchronous
+ exec-timeout 0 0
+line vty 0 4
+ password admin1234
+ login
+!
+vlan 10
+ name hq-public
+vlan 20
+ name hq-private
+vlan 100
+ name mgmt
+vlan 999
+ name native
+!
+int range gi1/0 - 1
+ desc to hq-sw-2 po1
+ channel-group 1 mode active
+int range gi1/2 - 3
+ desc to hq-sw-3 po2
+ channel-group 2 mode active
+!
+int po1
+ desc to hq-sw-2 po1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,100
+int po2
+ desc to hq-sw-3 po2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,100
+!
+int gi3/0
+ desc to hq-pc1 eth0
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ no sh
+int gi3/1
+ desc to hq-pc2 eth0
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ no sh
+!
+int vlan 100
+ ip addr 10.1.100.11 255.255.255.0
+ no sh
+! stp mst
+spanning-tree mode mst
+spanning-tree mst configuration
+ name hq
+ revision 1
+ instance 1 vlan 10,20,100
+!

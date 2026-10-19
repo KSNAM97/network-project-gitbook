@@ -1,0 +1,53 @@
+! arista
+!
+zerotouch cancel
+!
+hostname dc-sw2-l2
+username admin privilege 15 role network-admin secret admin1234
+!
+! stp mst
+spanning-tree mode mstp
+spanning-tree mst configuration
+ name dc
+ revision 1
+ instance 1 vlan 50,100
+!
+vlan 50
+ name server
+vlan 100
+ name mgmt
+vlan 999
+ name native
+!
+int et1
+ desc to dc-sw3-l3 et8
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 50,100
+!
+int et2
+ desc to dc-sw4-l3 et8
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 50,100
+!
+int et12
+ desc to dc-dns-2 eth0
+ switchport mode access
+ switchport access vlan 50
+ spanning-tree portfast
+!
+int vlan100
+ desc mgmt vlan for dc-sw2-l2
+ ip add 10.2.100.22/24
+!
+default int et1
+default int et2
+int range et1-2
+ channel-group 20 mode active
+int po20
+ desc to dc-sw3-l3, dc-sw4-l3 mlag
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 50,100
+!

@@ -1,0 +1,21 @@
+name: notify-portfolio
+on:
+  push:
+    branches: [main]
+    paths: [README.md, "docs/**", "configs/**"]
+  workflow_dispatch:
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.PORTFOLIO_DISPATCH_TOKEN }}
+    steps:
+      # no token yet -> skip quietly; the hourly sync in portfolio-site still picks the change up
+      - name: Trigger portfolio-site sync
+        if: env.GH_TOKEN != ''
+        run: gh workflow run sync.yml --repo KSNAM97/portfolio-site
+      - name: Diagnose token (prints results only, never the token)
+        if: failure()
+        run: |
+          if gh api repos/KSNAM97/network-project --silent 2>/dev/null; then echo "token CAN read network-project -> this is the read-only token, not portfolio-dispatch"; else echo "token cannot read network-project"; fi
+          if gh api repos/KSNAM97/portfolio-site/actions/workflows --silent 2>/dev/null; then echo "token has Actions access to portfolio-site"; else echo "token has NO Actions access to portfolio-site"; fi
