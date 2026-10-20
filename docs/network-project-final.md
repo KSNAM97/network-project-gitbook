@@ -27,7 +27,7 @@ DC ←── DMVPN Phase3(mGRE over IPsec, Private Internet 경유) ──→ HQ
 | 사이트 | AS | 대역 | 비고 |
 |---|---|---|---|
 | HQ | 65001 | 10.1.0.0/16 | OSPF 프로세스11 Area1, DMVPN Spoke(HQ-R2) |
-| DC | 65002 | 10.2.0.0/16 | OSPF 프로세스10 Area0, DMVPN Hub(DC-R2) |
+| DC | 65002 | 10.2.0.0/16 | OSPF 프로세스10 Area0, DMVPN Hub(DC-R2), 백업 Hub(DC-R1) |
 | BR1 | 65003 | 10.3.0.0/16 | OSPF 프로세스12 Area2, DMVPN Spoke(BR1-R1) |
 | BR2 | 65004 | 10.4.0.0/16 | OSPF 프로세스13 Area3, DMVPN Spoke(BR2-R2) |
 | ISP-1 | 65100 (P1, P2 RR / PE-A, PE-B Client) | 100.1.0.0/16 | iBGP RR + ISP 내부 OSPF |
@@ -173,6 +173,7 @@ DC ←── DMVPN Phase3(mGRE over IPsec, Private Internet 경유) ──→ HQ
 | 장비 | Tunnel0 | NBMA(source) | 역할 |
 |---|---|---|---|
 | DC-R2 | 172.16.0.1/24 | 203.0.113.5 | Hub, priority 255, mGRE over IPsec transport |
+| DC-R1 | 172.16.0.2/24 | 203.0.113.1 | 백업 Hub, priority 200(2026-10-19 추가, `docs/dmvpn-design.md` 7절) |
 | HQ-R2 | 172.16.0.13/24 | 203.0.113.9 | Spoke, priority 0, shortcut |
 | BR1-R1 | 172.16.0.11/24 | 203.0.113.13 | Spoke, priority 0, shortcut |
 | BR2-R2 | 172.16.0.12/24 | 203.0.113.17 | Spoke, priority 0, shortcut |
@@ -192,7 +193,7 @@ DC ←── DMVPN Phase3(mGRE over IPsec, Private Internet 경유) ──→ HQ
 ### 접근 통제
 - DC VLAN50(DC-DNS-1, DC-DNS-2): 각 사이트 → UDP/TCP 53만 허용, 그 외 차단. 적용 위치는 DC-R1~R4의 Gi0/0, Gi1/0 출력 방향(cEOS는 인터페이스 ACL 미지원). DHCP는 각 사이트 게이트웨이에서 제공하므로 서버 VLAN으로 DHCP(UDP 67/68) 허용 없음.
 
-## 6. 빌드 순서 (3.5주, 1인 체제)
+## 6. 빌드 순서 (계획 3.5주, 실제 2주, 1인 체제)
 
 기간: 2026-10-12(월) ~ 2026-11-04(수, 반일). 일별 목표는 `docs/schedule.md` 참고.
 

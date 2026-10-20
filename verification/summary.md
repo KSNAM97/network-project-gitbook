@@ -8,12 +8,13 @@
 |---|---|---|---|
 | VRRP 전환 | HQ(Cisco) | 장비 로그 기준 약 0.19초(Master → Init 00:13:56.227, Backup → Master 00:13:56.415), `ping` 손실 1개. 두 장비 시계 일치는 미확인 | [vrrp-failover](scenarios/vrrp-failover.md) |
 | VRRP 전환 | DC(Arista) | Wireshark 광고 공백 약 3.2초, `ping` 손실 5개 | [vrrp-failover](scenarios/vrrp-failover.md) |
-| VRRP 전환 | BR1(Aruba) | Wireshark 광고 공백 약 4.0초(`ping` 손실은 복구 구간 포함 값이라 제외) | [vrrp-failover](scenarios/vrrp-failover.md) |
+| VRRP 전환 | BR1(Aruba) | Wireshark 광고 공백 약 4.0초(1차 3.97초, 2차 4.00초로 재현, `ping` 손실은 복구 구간 포함 값이라 제외) | [vrrp-failover](scenarios/vrrp-failover.md) |
 | EtherChannel 링크 다운 | HQ Po1 | 손실 1개 | [etherchannel-link-down](scenarios/etherchannel-link-down.md) |
 | EtherChannel 링크 다운 | BR1 LAG 1(Aruba) | 손실 5개, 최대 응답 5015 ms | [etherchannel-link-down](scenarios/etherchannel-link-down.md) |
 | MLAG 링크 다운 | DC | 손실 1개, 복구 후 Active-full 2 | [etherchannel-link-down](scenarios/etherchannel-link-down.md), [mlag](dc/distribution/mlag.md) |
 | ISP-1 장애 | HQ-R1 ↔ ISP-1-PE-A | BGP hold-time 9초, 마지막 Keepalive 후 약 9.7초에 `NOTIFICATION`. 기본 경로는 ISP-2 쪽 OSPF E1 metric 201로 전환, 복구 후 세션 수립 약 1.6초 | [isp1-failure](scenarios/isp1-failure.md) |
 | DMVPN Hub 장애 | DC-R2 `tunnel 0` | Hub 중단 약 105초. shortcut ESP는 약 44초 유지 뒤 ISP(MPLS) 경로로 우회(TTL 60 → 57). `ping` 294개 모두 응답 | [dmvpn-hub-failure](scenarios/dmvpn-hub-failure.md) |
+| DMVPN Hub 이중화(DC-R1 백업 Hub) | DC-R2 `tunnel 0` | 평상시 `172.16.0.1` 경유, shutdown 후 `172.16.0.2`(DC-R1) 경유로 전환(HQ-PC1 → `10.10.10.13`, 5홉 유지). `ping` 44개 중 38개 응답(손실 6개), 복구 후 `172.16.0.1` 복귀 | [dmvpn-hub-failure](scenarios/dmvpn-hub-failure.md) |
 
 ## 서비스 품질과 서비스 동작
 
@@ -21,7 +22,7 @@
 |---|---|---|
 | QoS | DNS를 ACL로 분류해 `cm-business`에 af31 표시. 병목 시 `class-default`만 drop(578 → 1333), `cm-business` drop 0 | [qos-verification](scenarios/qos-verification.md) |
 | DHCP(HQ·BR2 Cisco, BR1 Aruba) | DORA 4단계 확인. 두 서버가 모두 Offer를 보내고 먼저 도착한 Offer로 임대(HQ, BR1은 SW-1, BR2는 SW-2). BR1(Aruba)은 VIP 출발지 Offer까지 3개 관찰. lease 86400 | [HQ](hq/distribution/dhcp.md), [BR1](br1/distribution/dhcp.md), [BR2](br2/distribution/dhcp.md) |
-| DNS(BR1-PC1 → DC-DNS-1) | DHCP로 받은 주소로 질의, A 질의에 `dc-r1.lab.local` → `10.10.10.1` 응답(약 5.9ms, 반복 시 0.3ms) | [dns](dc/host/dns.md) |
+| DNS(BR1-PC1 → DC-DNS-1) | DHCP로 받은 주소로 질의, A 질의에 `dc-r1.lab.local` → `10.10.10.1` 응답(첫 질의 약 30ms, 반복 질의 0.19 ~ 0.53ms) | [dns](dc/host/dns.md) |
 | MPLS 레이블 | Hub 장애로 ISP 경유 시 `12004`(LDP) + `14007`(VPN) 두 레이블, PHP로 마지막 홉 전 바깥 레이블 제거 | [mpls-label-path](scenarios/mpls-label-path.md) |
 
 ## 프로토콜 패킷 캡처(Wireshark)

@@ -18,7 +18,7 @@
 | 장비 구성 | HQ (HQ-R1·HQ-R2, HQ-SW-1 – HQ-SW-3), DC (DC-R1 – DC-R4, DC-SW1 – DC-SW4-L3, DC-SW1·2-L2, DC-DNS-1·DC-DNS-2), BR1 (BR1-R1·R2, BR1-SW1 ~ SW3-L3, Aruba CX), BR2 (BR2-R1·R2, BR2-SW1·SW2-L3, BR2-SW3-L2), 호스트 H1·H2, ISP-1·ISP-2 (ISP-n-PE-A·P1·P2·PE-B 각 4대), Private Internet (Private-net) |
 | 핵심 기술 | 사이트 OSPF, ISP iBGP Route Reflector(ISP-1 AS 65100, ISP-2 AS 65200), ISP 코어 MPLS L3VPN(LDP, VRF, vpnv4), 사이트 엣지 eBGP(route-map, prefix-list) + OSPF 기본 경로 광고, DMVPN Phase3, IPsec, VRRP, MSTP, EtherChannel, QoS, ACL 화이트리스트 |
 | 시뮬레이터 | GNS3 (Cisco 7200 / IOU, Arista vEOS-lab, Aruba AOS-CX) |
-| 일정 | 3.5주(2026-10-12 ~ 11-04), 1인 체제 (남기석) |
+| 일정 | 실제 2주(2026-10-12 - 10-23, 평일 10일), 계획 3.5주(11-04까지) 대비 단축, 1인 체제 (남기석) |
 | 검증 | 이중화 장애 실측 (FHRP, EtherChannel, ISP 장애, DMVPN Hub 장애), 트러블슈팅 로그 |
 
 ---
@@ -127,7 +127,7 @@ network-project/
 | 사이트 | AS | 대역 | 비고 |
 | --- | --- | --- | --- |
 | HQ | 65001 | 10.1.0.0/16 | OSPF 프로세스 11 Area 1, DMVPN Spoke (HQ-R2) |
-| DC | 65002 | 10.2.0.0/16 | OSPF 프로세스 10 Area 0, DMVPN Hub (DC-R2) |
+| DC | 65002 | 10.2.0.0/16 | OSPF 프로세스 10 Area 0, DMVPN Hub (DC-R2), 백업 Hub (DC-R1) |
 | BR1 | 65003 | 10.3.0.0/16 | OSPF 프로세스 12 Area 2, DMVPN Spoke (BR1-R1) |
 | BR2 | 65004 | 10.4.0.0/16 | OSPF 프로세스 13 Area 3, DMVPN Spoke (BR2-R2) |
 | ISP-1 | 65100 | 100.1.0.0/16 | iBGP (P1, P2 Route Reflector / PE-A, PE-B Client) + ISP 내부 OSPF |
@@ -149,6 +149,7 @@ network-project/
 | 장비 | Tunnel0 | NBMA (source) | 역할 |
 | --- | --- | --- | --- |
 | DC-R2 | 172.16.0.1/24 | 203.0.113.5 | Hub, priority 255, mGRE over IPsec |
+| DC-R1 | 172.16.0.2/24 | 203.0.113.1 | 백업 Hub, priority 200, DC 내부 링크 `ip ospf cost 100` |
 | HQ R2 | 172.16.0.13/24 | 203.0.113.9 | Spoke, priority 0, shortcut |
 | BR1 R1 | 172.16.0.11/24 | 203.0.113.13 | Spoke, priority 0, shortcut |
 | BR2 R2 | 172.16.0.12/24 | 203.0.113.17 | Spoke, priority 0, shortcut |

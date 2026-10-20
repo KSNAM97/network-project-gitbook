@@ -142,6 +142,9 @@ Wireshark: SW-1 마지막 광고에서 SW-2 첫 광고로 전환(약 3.97초)
 
 ![Wireshark 전환 구간](images/vrrp-br1-wireshark-transition.webp)
 
+2차 시험(2026-10-19, 같은 링크, 필터 `vrrp && vlan.id == 10`): SW-1(`10.3.10.2`) 마지막 광고 47.468258초(프레임 9505), SW-2(`10.3.10.3`) 첫 광고 51.472930초(프레임 10159), 공백 약 4.00초. 1차(3.97초)와 같은 길이로 재현됨. 아래 이미지는 2차 캡처.
+
+
 `ping` 통계
 
 ![ping 통계](images/vrrp-br1-ping-stats.png)
